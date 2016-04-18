@@ -1,0 +1,28 @@
+галерея альбомов фото
+синглу пейдж апликейшн
+main
+gallery
+indexDB - база
+
+загружать изображения
+инпут тайп файл
+заюзать веб камеру
+
+данніе отрендерится от вьюхи
+
+Gallery app
+
+No libs, except:
+scss
+Gulp
+
+Pages
+Home (main gallery page [albums])
+Album details
+New album
+
+Menu
+
+Storing in localStorage or indexDB
+
+Webcam and upload a file
