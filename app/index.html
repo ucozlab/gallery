@@ -3,32 +3,28 @@
 
 <head>
     <meta charset="utf-8">
-    <title>backbone test</title>
+    <title>My gallery app</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link type="text/css" rel="StyleSheet" href="css/bootstrap.css" />
+    <link rel="stylesheet" href="css/normalize.css" type="text/css" />
+    <link rel="stylesheet" href="css/main.css" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;subset=latin,latin-ext,cyrillic-ext" rel="stylesheet" type="text/css">
     <link type="text/css" rel="StyleSheet" href="css/font-awesome.min.css" />
-    <link rel="stylesheet" href="css/style.css" type="text/css" />
-    <script src="js/jquery_1.8.3.js"></script>
-    <script src="js/underscore.js"></script>
-    <script src="js/backbone.js"></script>
 </head>
 
 <body>
     <div id="page">
         <header>
             <div class="wrapper">
-                <div id="menu">
-                    <ul class="nav nav-pills">
-                        <li><a href="#!/">Start</a></li>
-                        <li><a href="#!/success">Success</a></li>
-                        <li><a href="#!/error">Error</a></li>
-                    </ul>
+                <div id="logo">
+                    <h1>The Best Gallery Ever</h1>
                 </div>
             </div>
         </header>
         <div id="main">
             <div class="wrapper">
-                <div id="block" class="block"></div>
+                <div class="block">
+                    here will be something
+                </div>
 
                 <!-- Блок ввода имени пользователя -->
                 <script type="text/template" id="start">
@@ -80,7 +76,5 @@
         </div>
     </footer>
     <script src="js/main.js"></script>
-    <script src="js/test.js"></script>
 </body>
-
 </html>
