@@ -1,21 +1,26 @@
 {
   "name": "gallery",
-  "description": "JavaScript gallery test",
-  "homepage": "https://github.com/ucozlab/gallery",
-  "keywords": [
-    "test",
-    "work",
-    "JavaScript"
-  ],
-  "author": "Artem UCOZLAB <artem@ucoz-team.net>",
-  "contributors": [],
-  "dependencies": [],
+  "version": "1.0.0",
+  "description": "gallery one_page_app",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "\"test\""
+  },
   "repository": {
     "type": "git",
-    "url": "git://github.com/ucozlab/gallery"
+    "url": "git+https://ucozlab:3b95f4df@github.com/ucozlab/gallery.git"
   },
-  "main": "main.js",
-  "version": "1.0.0",
+  "keywords": [
+    "gallery",
+    "app",
+    "test"
+  ],
+  "author": "Artem UcozLAB",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ucozlab/gallery/issues"
+  },
+  "homepage": "https://github.com/ucozlab/gallery#readme",
   "devDependencies": {
     "gulp-sass": "^2.2.0"
   }
