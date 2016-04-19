@@ -68,6 +68,7 @@ input[type=submit]:active, input[type=submit]:focus, .button:active, .button:foc
 .clearfix:after, .clearfix:before {content:" ";display:block;clear:both;height:0;overflow: hidden;}
 .table{display:table;width:100%;}
 .table-cell{display:table-cell;vertical-align:middle;}
+.inline-block{display: inline-block;vertical-align: middle;}
 
 body{border:0;background-color: #ffffff;color:#212121;font-family: 'Open Sans', Arial, sans-serif;font-size:14px;line-height: 25px;}
 a{text-decoration:none;color:#49943c;}

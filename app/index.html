@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="css/normalize.css" type="text/css" />
     <link rel="stylesheet" href="css/main.css" type="text/css" />
+    <link rel="stylesheet" href="css/grid12.css" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;subset=latin,latin-ext,cyrillic-ext" rel="stylesheet" type="text/css">
     <link type="text/css" rel="StyleSheet" href="css/font-awesome.min.css" />
 </head>
@@ -14,65 +15,32 @@
 <body>
     <div id="page">
         <header>
-            <div class="wrapper">
-                <div id="logo">
-                    <h1>The Best Gallery Ever</h1>
-                </div>
+            <div class="container">
+               <div class="col-xs-12">
+                    <div id="logo">
+                        <h1>The Best Gallery Ever</h1>
+                    </div>
+               </div>
             </div>
         </header>
         <div id="main">
-            <div class="wrapper">
-                <div class="block">
-                    here will be something
+            <div class="container">
+                <div class="col-xs-12">
+                    <div id="content">
+                        <div class="block">
+                            here will be something
+                        </div>
+                    </div>
                 </div>
-
-                <!-- Блок ввода имени пользователя -->
-                <script type="text/template" id="start">
-                    <div class="start">
-                        <div class="userplace">
-                            <label for="username">Имя пользователя: </label>
-                            <input type="text" id="username" />
-                        </div>
-                        <div class="buttonplace">
-                            <input type="button" value="Проверить" />
-                        </div>
-                    </div>
-                </script>
-
-                <!-- Блок ошибки -->
-                <script type="text/template" id="error">
-                    <div class="error">
-                        Ошибка. Пользователь
-                        <%= username %> не найден.
-                            <a href="#!/">Go back</a>
-                    </div>
-                </script>
-
-                <!-- Блок удачи -->
-                <script type="text/template" id="success">
-                    <div class="success">
-                        Пользователь
-                        <%= username %> найден.
-                            <a href="#!/">Go back</a>
-                    </div>
-                </script>
-
-                <!-- Блок test template -->
-                <script type="text/template" id="secure">
-                    <div>login : <%= login %></div>
-                    <div>password : <%= password %></div>
-                    <% if (nice == true) { %>
-                    <div>Nice!</div>
-                    <% } %>
-                </script>
-
             </div>
         </div>
     </div>
     <div class="page-buffer"></div>
     <footer id="footer">
-        <div class="wrapper">
-
+        <div class="container">
+            <div class="col-xs-12">
+                <div class="copyright">(c) Artem 4 MOZI dev.</div>
+            </div>
         </div>
     </footer>
     <script src="js/main.js"></script>
