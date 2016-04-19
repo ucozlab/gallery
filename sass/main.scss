@@ -1,10 +1,89 @@
-$font-stack:    Helvetica, sans-serif;
-$primary-color: #333;
-
-body {
-  font: 100% $font-stack;
-  color: $primary-color;
+@mixin box-shadow($parameters) {
+    -webkit-box-shadow: $parameters;
+    -moz-box-shadow: $parameters;
+    -o-box-shadow: $parameters;
+    box-shadow: $parameters;
 }
-.testing {
-  width: percentage(5/9);
+
+@mixin border-radius($radius) {
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    -ms-border-radius: $radius;
+    border-radius: $radius;
+}
+
+@mixin prefix-transition($parameters) {
+    -webkit-transition: $parameters;
+    -moz-transition: $parameters;
+    -ms-transition: $parameters;
+    transition: $parameters;
+}
+
+$main: #212121;
+$white: #ffffff;
+$gray: #a1a1a1;
+$forty: 40px;
+html,
+body {
+    height: 100%;
+}
+
+.block {
+    @include border-radius(2px);
+    @include box-shadow(0 0 6px rgba(0, 0, 0, 0.27));
+    background: #ffffff;
+    padding: 15px;
+}
+
+.copyright {
+    background: $main;
+    color: $gray;
+    line-height: 40px;
+}
+
+#page {
+    min-height: 100%;
+    margin-bottom: -$forty;
+    padding-bottom: $forty;
+}
+
+#footer {
+    height: $forty;
+}
+
+.button {
+    i {
+        vertical-align: middle;
+        margin: 0 5px 0 0;
+    }
+    &.button2 {
+        @include box-shadow(0 1px 0 rgba(0, 0, 0, 0.05));
+        @include border-radius(4px);
+        border: 1px solid rgba(0, 0, 0, 0.17);
+        padding: 5px;
+        background: $white;
+        color: $main;
+        height: auto;
+        i {
+            margin: 0;
+        }
+    }
+    &:hover,
+    &:active,
+    &:focus {
+        @include box-shadow(0 1px 0 0 rgba(0, 0, 0, 0.27));
+        border: 1px solid rgba(0, 0, 0, 0.27);
+    }
+}
+#nav {
+    position: fixed;
+    right: -100%;
+    top: 0;
+    height: 100%;
+    padding: $forty/2;
+    > .button.menubut {
+        position: fixed;
+        right: $forty/2;
+        top: $forty/2
+    }
 }

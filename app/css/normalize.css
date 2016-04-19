@@ -56,9 +56,7 @@ label{cursor:pointer;}
 input[type=submit], input[type=button], .button, input[type="reset"]{height: 45px;font-size: 14px;line-height: 25px;display: inline-block;cursor:pointer;text-transform:uppercase;background-color: #6dbe5e;color: #ffffff;font-weight: bold;padding: 10px 25px;border: none;border-radius: 2px;-webkit-border-radius: 2px;-moz-border-radius: 2px;}
 input[type=submit]:hover, .button:hover, input[type=button]:hover, input[type="reset"]:hover{background-color: #49943c;color: #ffffff;}
 input[type=submit]:active, input[type=submit]:focus, .button:active, .button:focus, input[type=button]:active, input[type=button]:focus, input[type="reset"]:focus, input[type="reset"]:active{background-color:#49943c;color: #ffffff;}
-.button.button2{color:#212121;border: 1px solid #d6d6d6;background: none;}
-.button.button2:hover, .button.button2:active, .button.button2:focus{background-color: #6dbe5e;color: #ffffff;border: 1px solid #6dbe5e;}
-.button i{vertical-align: middle;margin: 0 5px 0 0;}
+
 /*main*/
 .wrapper{width:100%;max-width:1000px;margin:0 auto;}
 .overflow{overflow: hidden;}
@@ -70,12 +68,12 @@ input[type=submit]:active, input[type=submit]:focus, .button:active, .button:foc
 .table-cell{display:table-cell;vertical-align:middle;}
 .inline-block{display: inline-block;vertical-align: middle;}
 
-body{border:0;background-color: #ffffff;color:#212121;font-family: 'Open Sans', Arial, sans-serif;font-size:14px;line-height: 25px;}
+body{border:0;background-color: #eeeeee;color:#212121;font-family: 'Open Sans', Arial, sans-serif;font-size:14px;line-height: 25px;}
 a{text-decoration:none;color:#49943c;}
-a, input, .button, .b-logo__name, .b-search__submit i, .b-hover, .b-close i, .shopmain .hmenu-item, .list-item__inner, .flist-values{-webkit-transition: all 0.3s ease;transition: all 0.3s ease;-moz-transition: all 0.3s ease;-o-transition: all 0.3s ease;}
+a, input, .button{-webkit-transition: all 0.3s ease;transition: all 0.3s ease;-moz-transition: all 0.3s ease;-o-transition: all 0.3s ease;}
 a:hover {color:#6dbe5e;outline: 0;}
 a:active, a:focus{color:#49943c;}
-.b-how a:hover, .breadcrumbs a:hover, .eText a:hover, .eMessage a:hover{text-decoration: underline;}
+
 /*a:visited{color:#376f2d;}*/
 h1, .h1{font-size:32px;font-weight:normal;line-height: 48px;text-transform: uppercase;}
 h2, .h2{font-size:24px;font-weight:600;line-height: 36px;}
