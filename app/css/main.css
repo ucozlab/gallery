@@ -69,22 +69,36 @@ body {
   top: 20px;
   padding: 0;
   width: 40px;
-  text-align: center; }
+  text-align: center;
+  z-index: 10; }
   #nav > .button#menubut i {
     line-height: 38px; }
-  #nav > .button#menubut.opened {
-    right: 120px; }
-    #nav > .button#menubut.opened + nav {
-      right: 0; }
+  #nav > .button#menubut.opened + nav {
+    right: 0; }
 
 #nav nav {
+  width: 200px;
   -webkit-transition: all 0.3s ease;
   -moz-transition: all 0.3s ease;
   -ms-transition: all 0.3s ease;
   transition: all 0.3s ease;
   position: fixed;
+  z-index: 5;
+  border-left: 1px solid #e1e1e1;
   right: -100%;
   top: 0;
   height: 100%;
-  padding: 20px;
+  padding: 80px 0;
   background: #ffffff; }
+  #nav nav ul li a {
+    display: block;
+    padding: 10px 20px;
+    color: inherit; }
+    #nav nav ul li a:hover {
+      color: #ffffff;
+      background-color: #a1a1a1; }
+
+section {
+  display: none; }
+  section.active {
+    display: block; }
