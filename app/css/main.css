@@ -1,0 +1,90 @@
+html,
+body {
+  height: 100%; }
+
+.block {
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  border-radius: 2px;
+  -webkit-box-shadow: 0 0 6px rgba(0, 0, 0, 0.27);
+  -moz-box-shadow: 0 0 6px rgba(0, 0, 0, 0.27);
+  -o-box-shadow: 0 0 6px rgba(0, 0, 0, 0.27);
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.27);
+  background: #ffffff;
+  padding: 15px; }
+
+.copyright {
+  background: #212121;
+  color: #a1a1a1;
+  line-height: 40px; }
+
+#page {
+  min-height: 100%;
+  margin-bottom: -40px;
+  padding-bottom: 40px; }
+
+#footer {
+  height: 40px;
+  position: relative;
+  z-index: 10; }
+
+.button i {
+  vertical-align: middle;
+  margin: 0 5px 0 0; }
+
+.button.button2 {
+  -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+  -o-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.17);
+  padding: 5px;
+  background: #ffffff;
+  color: #212121;
+  height: auto; }
+  .button.button2 i {
+    margin: 0; }
+  .button.button2:hover {
+    -webkit-box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.27);
+    -moz-box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.27);
+    -o-box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.27);
+    box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.27);
+    border: 1px solid rgba(0, 0, 0, 0.27); }
+  .button.button2:active {
+    -webkit-box-shadow: inset 0 2px 0 #d6d6d6;
+    -moz-box-shadow: inset 0 2px 0 #d6d6d6;
+    -o-box-shadow: inset 0 2px 0 #d6d6d6;
+    box-shadow: inset 0 2px 0 #d6d6d6;
+    background-color: #e5e5e5;
+    border: 1px solid rgba(0, 0, 0, 0.27); }
+
+#nav > .button#menubut {
+  position: fixed;
+  right: 20px;
+  top: 20px;
+  padding: 0;
+  width: 40px;
+  text-align: center; }
+  #nav > .button#menubut i {
+    line-height: 38px; }
+  #nav > .button#menubut.opened {
+    right: 120px; }
+    #nav > .button#menubut.opened + nav {
+      right: 0; }
+
+#nav nav {
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  position: fixed;
+  right: -100%;
+  top: 0;
+  height: 100%;
+  padding: 20px;
+  background: #ffffff; }
