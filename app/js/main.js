@@ -1,13 +1,15 @@
 function hasClass(elem, klass) {
     return (" " + elem.className + " ").indexOf(" " + klass + " ") > -1;
 }
-
-function mainMenu(elem) {
-    if (hasClass(elem, 'opened')) {
-        elem.classList.remove('opened');
+function addRemoveClass(who,andclass){
+    if (hasClass(who, andclass)) {
+        who.classList.remove(andclass);
     } else {
-        elem.classList.add('opened');
+        who.classList.add(andclass);
     }
+}
+function mainMenu(elem) {
+    addRemoveClass(elem,'opened');
     return false;
 }
 
@@ -40,6 +42,19 @@ function connectDB(f){
 		e.currentTarget.result.createObjectStore("myObjectStore", { keyPath: "key" });
 		connectDB(f);
 	}
+}
+/*end*/
+
+function app(){
+    var section = document.getElementById, nav;
+
+    window.addEventListener('hashchange', hashChangeCallback, false);
+    location.hash = '!/';
+}
+app.changeView = function(elem) {
+    var targ = elem.getAttribute("href");
+    var sect = document.getElementById(targ);
+    addRemoveClass(sect,'active');
 }
 
 /*not to work but to read  !! https://habrahabr.ru/post/200720/

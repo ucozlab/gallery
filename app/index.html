@@ -17,10 +17,10 @@
         <a href="javascript:void(0)" class="button button2" id="menubut" onclick="mainMenu(this)"><i class="material-icons">menu</i></a>
         <nav>
             <ul>
-                <li><a href="javascript:void(0)" onclick="changeView(this)">Home</a></li>
-                <li><a href="javascript:void(0)" onclick="changeView(this)">My albums</a></li>
-                <li><a href="javascript:void(0)" onclick="changeView(this)">New Album</a></li>
-                <li><a href="javascript:void(0)" onclick="changeView(this)">Contacts</a></li>
+                <li><a href="home" onclick="app.changeView(this);return false;">Home</a></li>
+                <li><a href="albums" onclick="app.changeView(this);return false;">My albums</a></li>
+                <li><a href="new" onclick="app.changeView(this);return false;">New Album</a></li>
+                <li><a href="contacts" onclick="app.changeView(this);return false;">Contacts</a></li>
             </ul>
         </nav>
     </div>
@@ -38,10 +38,31 @@
             <div class="container">
                 <div class="col-xs-12">
                     <div id="content">
-                        <section id="home" src="pages/dashboard.htm"></section>
-                        <section id="albums" src="pages/about.htm"></section>
-                        <section id="new" src="pages/contact.htm"></section>
-                        <section id="contacts" src="pages/contacts.htm"></section>
+                        <section id="home">
+                            <h2>Welcome</h2>
+                        </section>
+                        <section id="albums">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="block">album1</div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="block">album2</div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="block">album3</div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="block">album4</div>
+                                </div>
+                            </div>
+                        </section>
+                        <section id="new">
+                            <a href="javascript:void(0);">add</a>
+                        </section>
+                        <section id="contacts">
+                            mailto:me
+                        </section>
                     </div>
                 </div>
             </div>
