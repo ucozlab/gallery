@@ -54,7 +54,9 @@ function app(){
 app.changeView = function(elem) {
     var targ = elem.getAttribute("href");
     var sect = document.getElementById(targ);
-    addRemoveClass(sect,'active');
+    var siblings = sect.parentNode.childNodes[]
+    siblings.classList.remove('active');
+    sect.classList.add('active');
 }
 
 /*not to work but to read  !! https://habrahabr.ru/post/200720/

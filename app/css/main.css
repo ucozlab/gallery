@@ -71,8 +71,23 @@ body {
   width: 40px;
   text-align: center;
   z-index: 10; }
-  #nav > .button#menubut i {
-    line-height: 38px; }
+  #nav > .button#menubut:before {
+    content: "menu";
+    line-height: 38px;
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased; }
+  #nav > .button#menubut.opened:before {
+    content: "close"; }
   #nav > .button#menubut.opened + nav {
     right: 0; }
 
