@@ -54,8 +54,14 @@ function app(){
 app.changeView = function(elem) {
     var targ = elem.getAttribute("href");
     var sect = document.getElementById(targ);
-    var siblings = sect.parentNode.childNodes[]
-    siblings.classList.remove('active');
+    var siblings = sect.parentNode.childNodes;
+    for (var i = 0; i < siblings.length; i++) {
+        if (siblings[i].nodeType != 1) {
+            continue;
+        }
+        // Any code here that accesses siblings[i] will sure to be an element(check if not spaces text)
+        siblings[i].classList.remove('active');
+    }
     sect.classList.add('active');
 }
 
