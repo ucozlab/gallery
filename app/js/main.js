@@ -63,7 +63,9 @@ app.changeView = function (elem, event) { //changeView
     event.preventDefault();
     var targ = elem.getAttribute("href");
     var who = document.getElementById(targ);
-    siblingsAddRemoveClass(who, 'active')
+    var link = document.querySelectorAll('#nav ul li a[href="'+targ+'"]')[0];
+    siblingsAddRemoveClass(who, 'active');
+    siblingsAddRemoveClass(link.parentElement, 'active');
     location.hash = '!/'+targ+'';
 }
 app.init = function () {
@@ -88,7 +90,9 @@ app.init = function () {
         history.pathname = location.hash;
         document.title = "Home - MyGallery SPA";
         var who = document.getElementById('home');
+        var link = document.querySelectorAll('#nav ul li a[href="home"]')[0];
         siblingsAddRemoveClass(who, 'active');  //changeView
+        siblingsAddRemoveClass(link.parentElement, 'active'); //change link class
     }
 }
 app.init(); //initialize app

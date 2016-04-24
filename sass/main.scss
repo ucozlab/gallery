@@ -136,7 +136,13 @@ body {
                     color: inherit;
                     &:hover {
                         color: $white;
-                        background-color: $gray;
+                        background-color: $main;
+                    }
+                }
+                &.active {
+                    a {
+                        color: $white;
+                        background-color: $main;
                     }
                 }
             }

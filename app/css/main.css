@@ -111,7 +111,10 @@ body {
     color: inherit; }
     #nav nav ul li a:hover {
       color: #ffffff;
-      background-color: #a1a1a1; }
+      background-color: #212121; }
+  #nav nav ul li.active a {
+    color: #ffffff;
+    background-color: #212121; }
 
 section {
   display: none; }
