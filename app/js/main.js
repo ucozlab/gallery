@@ -9,6 +9,7 @@ function addRemoveClass(who, andclass) { // add or remove Class
         who.classList.add(andclass);
     }
 }
+
 function siblingsAddRemoveClass(who, andclass) { // remove siblings class and add it to this
     var siblings = who.parentNode.childNodes;
     for (var i = 0; i < siblings.length; i++) {
@@ -20,6 +21,7 @@ function siblingsAddRemoveClass(who, andclass) { // remove siblings class and ad
     }
     who.classList.add(andclass);
 }
+
 function mainMenu(elem) { // menubutton click
     addRemoveClass(elem, 'opened');
     return false;
@@ -59,14 +61,13 @@ function connectDB(f) {
 function app() {
     //var section = document.getElementById, nav;
 }
-app.changeView = function (elem, event) { //changeView
-    event.preventDefault();
-    var targ = elem.getAttribute("href");
-    var who = document.getElementById(targ);
-    var link = document.querySelectorAll('#nav ul li a[href="'+targ+'"]')[0];
+
+app.changeView = function (text) { //changeView
+    var who = document.getElementById(text);
+    var link = document.querySelectorAll('#nav ul li a[href="' + text + '"]')[0];
     siblingsAddRemoveClass(who, 'active');
     siblingsAddRemoveClass(link.parentElement, 'active');
-    location.hash = '!/'+targ+'';
+    location.hash = '!/' + text + '';
 }
 app.init = function () {
 
@@ -76,29 +77,39 @@ app.init = function () {
                 foo: "bar"
             };
             route = location.hash.substr(3);
-            history.pushState(stateParameters, ""+capitalizeFirstLetter(route)+" - MyGallery SPA", location.hash);
+            history.replaceState(stateParameters, "" + capitalizeFirstLetter(route) + " - MyGallery SPA", location.hash);
             history.pathname = location.hash;
-            document.title = ""+capitalizeFirstLetter(route)+" - MyGallery SPA";
+            document.title = "" + capitalizeFirstLetter(route) + " - MyGallery SPA";
         }
     }
     window.addEventListener('hashchange', hashChangeCallback, false);
-
-    //check if index.html without hash onload
-    if(!window.location.hash) {
-        history.replaceState("", "Home - MyGallery SPA", "#!/home");
-        location.hash = '!/home';
-        history.pathname = location.hash;
-        document.title = "Home - MyGallery SPA";
-        var who = document.getElementById('home');
-        var link = document.querySelectorAll('#nav ul li a[href="home"]')[0];
-        siblingsAddRemoveClass(who, 'active');  //changeView
-        siblingsAddRemoveClass(link.parentElement, 'active'); //change link class
+    window.onpopstate = function (event) {
+        var route = location.hash.substr(3);
+        app.changeView(route);
+        //document.getElementById(targ);
+        // app.changeView()alert("location: " + document.location + ", state: " + JSON.stringify(event.state));
+    };
+    if (!window.location.hash) {
+        //check if index.html without hash onload
+        app.changeView('home');
+        hashChangeCallback();
+    } else {
+        var route = location.hash.substr(3);
+        app.changeView(route);
+        hashChangeCallback();
     }
 }
+
+/*click functions*/
+var viewlinks = document.querySelectorAll('#nav ul li a');
+var viewlinksItems = [].slice.call(viewlinks);
+viewlinksItems.forEach(function (item, i) {
+    var linktext = item.getAttribute("href");
+    item.addEventListener('click', function (event) {
+        event.preventDefault();
+        app.changeView(linktext);
+    });
+});
+/*click functions end*/
+
 app.init(); //initialize app
-
-
-
-
-
-
