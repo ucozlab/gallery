@@ -49,7 +49,8 @@ function connectDB(f) {
 function app() {
     var section = document.getElementById, nav;
 }
-app.changeView = function (elem) {
+app.changeView = function (elem, event) {
+    event.preventDefault();
     var targ = elem.getAttribute("href");
     var sect = document.getElementById(targ);
     var siblings = sect.parentNode.childNodes;
@@ -60,29 +61,22 @@ app.changeView = function (elem) {
         // Any code here that accesses siblings[i] will sure to be an element(check if not spaces text)
         siblings[i].classList.remove('active');
     }
-    sect.classList.add('active');
+    sect.classList.add('active');  //changeView
+
     location.hash = '!/'+targ+'';
     var stateParameters = {
         foo: "bar"
     };
-
-    var uri = elem; // предварительно формирование uri
-    history.pushState(stateParameters, ""+capitalizeFirstLetter(targ)+" - MyGallery SPA", uri);
-    history.pathname = uri;
-
+    history.pushState(stateParameters, ""+capitalizeFirstLetter(targ)+" - MyGallery SPA", location.hash);
+    history.pathname = location.hash; //changeHistory
+    document.title = ""+capitalizeFirstLetter(targ)+" - MyGallery SPA";
 }
 app.init = function () {
 
     function hashChangeCallback() {
         if (/^\#\!/.test(location.hash)) {
-            var route = location.hash.substr(2),
-                anchor = $('a[name="!' + route + '"]');
-            if (anchor.length) {
-                $('li.active', $nav).removeClass('active');
-                $('li:has(a[href="#!' + route + '"])', $nav).addClass('active');
-                $sections.hide();
-                anchor.closest('section').show();
-            }
+            route = location.hash.substr(3);
+
         }
     }
     window.addEventListener('hashchange', hashChangeCallback, false);
