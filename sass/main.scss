@@ -215,4 +215,8 @@ fieldset {
         margin: 0 0 $forty/4 0;
         width: 100%;
     }
+    input[type="submit"] {
+        display: inline-block;
+        width: auto;
+    }
 }

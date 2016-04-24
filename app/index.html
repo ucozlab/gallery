@@ -51,7 +51,7 @@
                             <div class="margin30">
                                 <fieldset>
                                     <legend>new photo</legend>
-                                    <form action="create" id="addform" onsubmit="submitForm()">
+                                    <form action="create" id="addform" onsubmit="app.addPhoto(event)">
                                         <select name="category" id="category" required>
                                             <option value="" disabled selected="selected">Choose album...</option>
                                             <option value="cats">Cats</option>

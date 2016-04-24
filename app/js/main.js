@@ -113,3 +113,8 @@ viewlinksItems.forEach(function (item, i) {
 /*click functions end*/
 
 app.init(); //initialize app
+
+app.addPhoto = function(event) {
+    event.preventDefault();
+    alert();
+}

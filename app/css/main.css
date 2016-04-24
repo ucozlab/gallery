@@ -164,3 +164,7 @@ fieldset {
   display: block;
   margin: 0 0 10px 0;
   width: 100%; }
+
+#addform input[type="submit"] {
+  display: inline-block;
+  width: auto; }
