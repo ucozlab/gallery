@@ -67,6 +67,8 @@ input[type=submit]:active, input[type=submit]:focus, .button:active, .button:foc
 .table{display:table;width:100%;}
 .table-cell{display:table-cell;vertical-align:middle;}
 .inline-block{display: inline-block;vertical-align: middle;}
+.additional{color:#8a8a8a;font-size: 13px;line-height: 21px;}
+.normal{font-style:normal;font-weight: normal;font-size:inherit;line-height:inherit;}
 
 body{border:0;background-color: #eeeeee;color:#212121;font-family: 'Open Sans', Arial, sans-serif;font-size:14px;line-height: 25px;}
 a{text-decoration:none;color:#49943c;}
@@ -81,5 +83,3 @@ h3, .h3{font-size:18px;font-weight:600;line-height: 27px;}
 h4, .h4{font-size:16px;font-weight:600;line-height: 25px;}
 h5, .h5{font-size:14px;font-weight:normal;line-height: 18px;text-transform: lowercase;}
 h5:first-letter, .h5:first-letter{text-transform: uppercase;}
-.additional{color:#8a8a8a;font-size: 13px;line-height: 21px;}
-.normal{font-style:normal;font-weight: normal;font-size:inherit;line-height:inherit;}
