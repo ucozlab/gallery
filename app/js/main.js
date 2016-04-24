@@ -9,7 +9,17 @@ function addRemoveClass(who, andclass) {
         who.classList.add(andclass);
     }
 }
-
+function siblingsAddRemoveClass(who, andclass) {
+    var siblings = who.parentNode.childNodes;
+    for (var i = 0; i < siblings.length; i++) {
+        if (siblings[i].nodeType != 1) {
+            continue;
+        }
+        // check if not spaces text
+        siblings[i].classList.remove(andclass);
+    }
+    who.classList.add(andclass);
+}
 function mainMenu(elem) {
     addRemoveClass(elem, 'opened');
     return false;
@@ -47,39 +57,47 @@ function connectDB(f) {
 
 /*app*/
 function app() {
-    var section = document.getElementById, nav;
+    //var section = document.getElementById, nav;
 }
 app.changeView = function (elem, event) {
     event.preventDefault();
     var targ = elem.getAttribute("href");
-    var sect = document.getElementById(targ);
-    var siblings = sect.parentNode.childNodes;
-    for (var i = 0; i < siblings.length; i++) {
-        if (siblings[i].nodeType != 1) {
-            continue;
-        }
-        // Any code here that accesses siblings[i] will sure to be an element(check if not spaces text)
-        siblings[i].classList.remove('active');
-    }
-    sect.classList.add('active');  //changeView
-
+    var who = document.getElementById(targ);
+    siblingsAddRemoveClass(who, 'active')  //changeView
     location.hash = '!/'+targ+'';
-    var stateParameters = {
-        foo: "bar"
-    };
-    history.pushState(stateParameters, ""+capitalizeFirstLetter(targ)+" - MyGallery SPA", location.hash);
-    history.pathname = location.hash; //changeHistory
-    document.title = ""+capitalizeFirstLetter(targ)+" - MyGallery SPA";
 }
 app.init = function () {
 
-    function hashChangeCallback() {
+    function hashChangeCallback() { //changeHistory
         if (/^\#\!/.test(location.hash)) {
+            var stateParameters = {
+                foo: "bar"
+            };
             route = location.hash.substr(3);
-
+            history.pushState(stateParameters, ""+capitalizeFirstLetter(route)+" - MyGallery SPA", location.hash);
+            history.pathname = location.hash;
+            document.title = ""+capitalizeFirstLetter(route)+" - MyGallery SPA";
         }
     }
     window.addEventListener('hashchange', hashChangeCallback, false);
+
+    //check if index.html without hash onload
+    if(!window.location.hash) {
+        history.replaceState("", "Home - MyGallery SPA", "#!/home");
+        location.hash = '!/home';
+        history.pathname = location.hash;
+        document.title = "Home - MyGallery SPA";
+        var sect = document.getElementById('home');
+        var siblings = sect.parentNode.childNodes;
+        for (var i = 0; i < siblings.length; i++) {
+            if (siblings[i].nodeType != 1) {
+                continue;
+            }
+            // Any code here that accesses siblings[i] will sure to be an element(check if not spaces text)
+            siblings[i].classList.remove('active');
+        }
+        sect.classList.add('active');  //changeView
+    }
 }
 app.init(); //start app
 
