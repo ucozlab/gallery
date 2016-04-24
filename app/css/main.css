@@ -141,3 +141,26 @@ section {
   display: none; }
   section.active {
     display: block; }
+
+fieldset {
+  display: inline-block;
+  width: 100%;
+  max-width: 480px; }
+
+#addform .required {
+  position: relative; }
+  #addform .required:after {
+    content: "*";
+    color: #ed5959;
+    position: absolute;
+    right: 10px;
+    top: 12px; }
+  #addform .required input, #addform .required textarea {
+    padding-right: 20px; }
+
+#addform input,
+#addform textarea,
+#addform select {
+  display: block;
+  margin: 0 0 10px 0;
+  width: 100%; }

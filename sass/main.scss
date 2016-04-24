@@ -28,6 +28,7 @@ $forty: 40px;
 $all: all 0.3s ease;
 $green:#689f38;
 $greenhover: darken($green, 5%);
+$red: #ed5959;
 html,
 body {
     height: 100%;
@@ -36,10 +37,10 @@ body {
 .margin30 {
     margin: $forty - ($forty/4) 0;
 }
-.padding20 {
-            padding: 0 $forty/2;
-        }
 
+.padding20 {
+    padding: 0 $forty/2;
+}
 
 #logo {
     border-bottom: 1px solid $gray;
@@ -184,5 +185,34 @@ section {
     display: none;
     &.active {
         display: block;
+    }
+}
+
+fieldset {
+    display: inline-block;
+    width: 100%;
+    max-width: $forty*12;
+}
+
+#addform {
+    .required {
+        position: relative;
+        &:after {
+            content: "*";
+            color: #ed5959;
+            position: absolute;
+            right: $forty/4;
+            top: 12px;
+        }
+        input, textarea {
+            padding-right: $forty/2;
+        }
+    }
+    input,
+    textarea,
+    select {
+        display: block;
+        margin: 0 0 $forty/4 0;
+        width: 100%;
     }
 }

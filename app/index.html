@@ -47,23 +47,26 @@
                             <a class="button button2 padding20" href="javascript:void(0)" onclick="app.changeView('new');" >Create album <i class="inline-block material-icons">navigate_next</i></a>
                         </section>
                         <section id="new">
-                            <h2>Add new album</h2>
+                            <h2>Add new photo</h2>
                             <div class="margin30">
                                 <fieldset>
-                                    <legend>new album</legend>
-                                    <form action="create" id="addform">
-                                        <select name="category" id="category">
-                                            <option value="disabled" disabled selected="selected">Choose...</option>
+                                    <legend>new photo</legend>
+                                    <form action="create" id="addform" onsubmit="submitForm()">
+                                        <select name="category" id="category" required>
+                                            <option value="" disabled selected="selected">Choose album...</option>
                                             <option value="cats">Cats</option>
                                             <option value="dogs">Dogs</option>
                                             <option value="cars">Cars</option>
                                             <option value="nature">Nature</option>
                                         </select>
-                                        <input type="text" name="photoname" required placeholder="Name">
+                                        <div class="required">
+                                            <input type="text" name="photoname" required placeholder="Name">
+                                        </div>
                                         <textarea name="description" placeholder="Description"></textarea>
                                         <div class="file">
-                                            <input type="file" name="file">
+                                            <input type="file" name="file" id="file">
                                         </div>
+                                        <input type="submit"  value="Submit">
                                     </form>
                                 </fieldset>
                             </div>

@@ -47,8 +47,8 @@ button[disabled],html input[disabled] {cursor: default;}
 input[type="checkbox"],input[type="radio"] {padding: 0;}
 textarea {overflow: auto;vertical-align: top;}
 
-input[type=text], input[type=search], input[type=password], input[type=tel], textarea, select{font-size: 14px;line-height: 25px;padding:9px 15px;border:1px solid #d6d6d6;margin:0;border-radius: 2px;-webkit-border-radius: 2px;-moz-border-radius: 2px;}
-input[type=text]:focus, input[type=text]:active, input[type=search]:focus, input[type=search]:active, input[type=tel]:focus, input[type=tel]:active, textarea:focus, textarea:active, input[type=password]:focus, input[type=password]:active{border: 1px solid #6dbe5e;}
+input[type=text], input[type=search], input[type=password], input[type=tel], textarea, select{outline: none;font-size: 14px;line-height: 25px;padding:9px 15px;border:1px solid #d6d6d6;margin:0;border-radius: 2px;-webkit-border-radius: 2px;-moz-border-radius: 2px;}
+input[type=text]:focus, input[type=text]:active, input[type=search]:focus, input[type=search]:active, input[type=tel]:focus, input[type=tel]:active, textarea:focus, textarea:active, input[type=password]:focus, input[type=password]:active, select:active, select:focus{border: 1px solid #6dbe5e;}
 input[type=checkbox]{}
 input[type=checkbox]:before{}
 input[type=checkbox]:checked:before{}
