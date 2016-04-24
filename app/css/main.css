@@ -3,10 +3,10 @@ body {
   height: 100%; }
 
 .margin30 {
-  margin: 26.66667px; }
+  margin: 30px 0; }
 
-.padding15 {
-  padding: 0 13.33333px; }
+.padding20 {
+  padding: 0 20px; }
 
 #logo {
   border-bottom: 1px solid #a1a1a1;
@@ -66,6 +66,8 @@ h2 {
   background: #ffffff;
   color: #212121;
   height: auto; }
+  .button.button2.padding20 {
+    padding: 5px 20px; }
   .button.button2 i {
     margin: 0; }
   .button.button2:hover {

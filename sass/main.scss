@@ -34,12 +34,12 @@ body {
 }
 
 .margin30 {
-    margin: $forty - $forty/3
+    margin: $forty - ($forty/4) 0;
 }
+.padding20 {
+            padding: 0 $forty/2;
+        }
 
-.padding15 {
-    padding: 0 $forty/3;
-}
 
 #logo {
     border-bottom: 1px solid $gray;
@@ -91,10 +91,13 @@ h2 {
         @include box-shadow(0 1px 0 rgba(0, 0, 0, 0.05));
         @include border-radius(4px);
         border: 1px solid rgba(0, 0, 0, 0.17);
-        padding: 5px;
+        padding: $forty/8;
         background: $white;
         color: $main;
         height: auto;
+        &.padding20 {
+            padding: $forty/8 $forty/2;
+        }
         i {
             margin: 0;
         }
