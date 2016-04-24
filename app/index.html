@@ -44,7 +44,29 @@
                             <p class="greetings margin30">
                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                             </p>
-                            <a class="button button2 padding20" href="javascript:void(0)" onclick="app.changeView('albums');" >Create album <i class="inline-block material-icons">navigate_next</i></a>
+                            <a class="button button2 padding20" href="javascript:void(0)" onclick="app.changeView('new');" >Create album <i class="inline-block material-icons">navigate_next</i></a>
+                        </section>
+                        <section id="new">
+                            <h2>Add new album</h2>
+                            <div class="margin30">
+                                <fieldset>
+                                    <legend>new album</legend>
+                                    <form action="create" id="addform">
+                                        <select name="category" id="category">
+                                            <option value="disabled" disabled selected="selected">Choose...</option>
+                                            <option value="cats">Cats</option>
+                                            <option value="dogs">Dogs</option>
+                                            <option value="cars">Cars</option>
+                                            <option value="nature">Nature</option>
+                                        </select>
+                                        <input type="text" name="photoname" required placeholder="Name">
+                                        <textarea name="description" placeholder="Description"></textarea>
+                                        <div class="file">
+                                            <input type="file" name="file">
+                                        </div>
+                                    </form>
+                                </fieldset>
+                            </div>
                         </section>
                         <section id="albums">
                             <div class="row">
@@ -61,9 +83,6 @@
                                     <div class="block">album4</div>
                                 </div>
                             </div>
-                        </section>
-                        <section id="new">
-                            <a href="javascript:void(0);">add</a>
                         </section>
                         <section id="contacts">
 
