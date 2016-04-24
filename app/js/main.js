@@ -1,15 +1,15 @@
 function hasClass(elem, klass) {
-    return (" " + elem.className + " ").indexOf(" " + klass + " ") > -1;
+    return (" " + elem.className + " ").indexOf(" " + klass + " ") > -1; //check if hasClass
 }
 
-function addRemoveClass(who, andclass) {
+function addRemoveClass(who, andclass) { // add or remove Class
     if (hasClass(who, andclass)) {
         who.classList.remove(andclass);
     } else {
         who.classList.add(andclass);
     }
 }
-function siblingsAddRemoveClass(who, andclass) {
+function siblingsAddRemoveClass(who, andclass) { // remove siblings class and add it to this
     var siblings = who.parentNode.childNodes;
     for (var i = 0; i < siblings.length; i++) {
         if (siblings[i].nodeType != 1) {
@@ -20,12 +20,12 @@ function siblingsAddRemoveClass(who, andclass) {
     }
     who.classList.add(andclass);
 }
-function mainMenu(elem) {
+function mainMenu(elem) { // menubutton click
     addRemoveClass(elem, 'opened');
     return false;
 }
 
-function capitalizeFirstLetter(string) {
+function capitalizeFirstLetter(string) { // Uppercase first letter
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
@@ -55,15 +55,15 @@ function connectDB(f) {
 }
 /*end*/
 
-/*app*/
+/*app start*/
 function app() {
     //var section = document.getElementById, nav;
 }
-app.changeView = function (elem, event) {
+app.changeView = function (elem, event) { //changeView
     event.preventDefault();
     var targ = elem.getAttribute("href");
     var who = document.getElementById(targ);
-    siblingsAddRemoveClass(who, 'active')  //changeView
+    siblingsAddRemoveClass(who, 'active')
     location.hash = '!/'+targ+'';
 }
 app.init = function () {
@@ -87,49 +87,14 @@ app.init = function () {
         location.hash = '!/home';
         history.pathname = location.hash;
         document.title = "Home - MyGallery SPA";
-        var sect = document.getElementById('home');
-        var siblings = sect.parentNode.childNodes;
-        for (var i = 0; i < siblings.length; i++) {
-            if (siblings[i].nodeType != 1) {
-                continue;
-            }
-            // Any code here that accesses siblings[i] will sure to be an element(check if not spaces text)
-            siblings[i].classList.remove('active');
-        }
-        sect.classList.add('active');  //changeView
+        var who = document.getElementById('home');
+        siblingsAddRemoveClass(who, 'active');  //changeView
     }
 }
-app.init(); //start app
-
-/*not to work but to read  !! https://habrahabr.ru/post/200720/
-
-(function ($, window, undefined) {
-
-  var $sections, $nav;
-
-  $(function () {
-      $sections = $('section'),
-      $nav = $('ul.nav');
-
-      window.addEventListener('hashchange', hashChangeCallback, false);
-      location.hash = '!/';
-  })
-
-  function hashChangeCallback () {
-      if (/^\#\!/.test(location.hash)) {
-        var route = location.hash.substr(2),
-            anchor = $('a[name="!' + route + '"]');
-        if (anchor.length) {
-          $('li.active', $nav).removeClass('active');
-          $('li:has(a[href="#!'+route+'"])', $nav).addClass('active');
-          $sections.hide();
-          anchor.closest('section').show();
-        }
-      }
-  }
+app.init(); //initialize app
 
 
 
-}(window.jQuery, window))
 
-*/
+
+
