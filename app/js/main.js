@@ -98,6 +98,7 @@ app.init = function () {
         app.changeView(route);
         hashChangeCallback();
     }
+    GLOBALID = 1;
 }
 
 /*click functions*/
@@ -114,11 +115,37 @@ viewlinksItems.forEach(function (item, i) {
 
 app.init(); //initialize app
 
-app.addPhoto = function(params) {
+app.addPhoto = function (params) {
+    params.img = 'https://placekitten.com/300/199';
+    var div = document.createElement('div');
+    div.className = "col-md-3";
+    div.innerHTML = '<div class="block" id="'+GLOBALID+'">' +
+        +'<div class="b-img"><a href="app.photopage(this)"><img src="'+params.img+'"></a></div>' +
+        +'<div class="b-name h2">'+params.name+'</div>' +
+        +'<div class="b-cat additional"><i class="material-icons inline-block">folder</i> '+params.cat+'</div>' +
+        +'<div class="b-desc">'+params.desc+'</div>' +
+        +'</div>';
+    var list = document.getElementById('albums');
+    for (var i = 0; i < list.childNodes; i++) {
+        if (list.childNodes[i].nodeType == 1) { // check if text
+            list.childNodes[i].appendChild(div);
+            return;
+        }
+    }
+    GLOBALID++;
     console.log(params);
 }
 
-function formValidate(event){
+/*
+
+var div = document.createElement('div');
+    div.className = "col-md-3 test";
+list.childNodes[1].appendChild(div);
+
+*/
+
+
+function formValidate(event) {
     event.preventDefault();
     var photocat = addform.elements["category"].value,
         photoname = addform.elements["photoname"].value,
@@ -127,9 +154,9 @@ function formValidate(event){
         alert('Fill in required fields'); // test on html5 attr required
     } else {
         app.addPhoto({
-            cat : photocat,
-            name : photoname,
-            desc : photodesc
+            cat: photocat,
+            name: photoname,
+            desc: photodesc
         });
     }
 }

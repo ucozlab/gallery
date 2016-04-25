@@ -223,5 +223,9 @@ fieldset {
 .block {
     .b-name {
         color: $green;
+        font-weight: normal;
+    }
+    .b-cat {
+        font-size: 15px;
     }
 }
