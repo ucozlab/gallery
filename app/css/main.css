@@ -168,3 +168,6 @@ fieldset {
 #addform input[type="submit"] {
   display: inline-block;
   width: auto; }
+
+.block .b-name {
+  color: #689f38; }

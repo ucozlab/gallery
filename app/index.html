@@ -51,7 +51,7 @@
                             <div class="margin30">
                                 <fieldset>
                                     <legend>new photo</legend>
-                                    <form action="create" id="addform" onsubmit="app.addPhoto(event)">
+                                    <form action="create" id="addform" onsubmit="formValidate(event)">
                                         <select name="category" id="category" required>
                                             <option value="" disabled selected="selected">Choose album...</option>
                                             <option value="cats">Cats</option>
@@ -73,17 +73,34 @@
                         </section>
                         <section id="albums">
                             <div class="row">
-                                <div class="col-md-4">
-                                    <div class="block">album1</div>
+                                <div class="col-md-3">
+                                    <div class="block" id="1">
+                                        <div class="b-img"><a href="app.photopage(this)"><img src="https://placekitten.com/300/200"></a></div>
+                                        <div class="b-name h3">a cat</div>
+                                        <div class="b-cat"><i class="material-icons inline-block">folder</i> cats</div>
+                                        <div class="b-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+                                    </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="block">album2</div>
+                                <div class="col-md-3">
+                                    <div class="block" id="2">
+                                        <div class="b-img"><a href="app.photopage(this)"><img src="https://placekitten.com/300/199"></a></div>
+                                        <div class="b-name h3">another cat</div>
+                                        <div class="b-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+                                    </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="block">album3</div>
+                                <div class="col-md-3">
+                                    <div class="block" id="3">
+                                        <div class="b-img"><a href="app.photopage(this)"><img src="https://placekitten.com/300/201"></a></div>
+                                        <div class="b-name h3">funny cat</div>
+                                        <div class="b-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+                                    </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="block">album4</div>
+                                <div class="col-md-3">
+                                    <div class="block" id="4">
+                                        <div class="b-img"><a href="app.photopage(this)"><img src="https://placekitten.com/300/202"></a></div>
+                                        <div class="b-name h3">very nice cat</div>
+                                        <div class="b-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+                                    </div>
                                 </div>
                             </div>
                         </section>

@@ -114,7 +114,22 @@ viewlinksItems.forEach(function (item, i) {
 
 app.init(); //initialize app
 
-app.addPhoto = function(event) {
+app.addPhoto = function(params) {
+    console.log(params);
+}
+
+function formValidate(event){
     event.preventDefault();
-    alert();
+    var photocat = addform.elements["category"].value,
+        photoname = addform.elements["photoname"].value,
+        photodesc = addform.elements["description"].value;
+    if ((photocat == '') || (photoname == '')) {
+        alert('Fill in required fields'); // test on html5 attr required
+    } else {
+        app.addPhoto({
+            cat : photocat,
+            name : photoname,
+            desc : photodesc
+        });
+    }
 }
