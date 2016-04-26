@@ -116,22 +116,23 @@ viewlinksItems.forEach(function (item, i) {
 app.init(); //initialize app
 
 app.addPhoto = function (params) {
-    params.img = 'https://placekitten.com/300/199';
+    params.img = createImg(params.file);
     var div = document.createElement('div');
     div.className = "col-md-3";
-    div.innerHTML = '<div class="block" id="'+GLOBALID+'">' +
-        +'<div class="b-img"><a href="app.photopage(this)"><img src="'+params.img+'"></a></div>' +
-        +'<div class="b-name h2">'+params.name+'</div>' +
-        +'<div class="b-cat additional"><i class="material-icons inline-block">folder</i> '+params.cat+'</div>' +
-        +'<div class="b-desc">'+params.desc+'</div>' +
+    div.innerHTML = '<div class="block" id="'+GLOBALID+'">'
+        +'<div class="b-img"><a href="app.photopage(this)"><img src="'+params.img+'"></a></div>'
+        +'<div class="b-name h2">'+params.name+'</div>'
+        +'<div class="b-cat additional"><i class="material-icons inline-block">folder</i> '+params.cat+'</div>'
+        +'<div class="b-desc">'+params.desc+'</div>'
         +'</div>';
     var list = document.getElementById('albums');
-    for (var i = 0; i < list.childNodes; i++) {
+    var arr = [];
+    for (var i = 0; i < list.childNodes.length; i++) {
         if (list.childNodes[i].nodeType == 1) { // check if text
-            list.childNodes[i].appendChild(div);
-            return;
+            arr.push(list.childNodes[i]);
         }
     }
+    arr[0].appendChild(div);
     GLOBALID++;
     console.log(params);
 }
@@ -149,14 +150,47 @@ function formValidate(event) {
     event.preventDefault();
     var photocat = addform.elements["category"].value,
         photoname = addform.elements["photoname"].value,
-        photodesc = addform.elements["description"].value;
-    if ((photocat == '') || (photoname == '')) {
-        alert('Fill in required fields'); // test on html5 attr required
+        photodesc = addform.elements["description"].value,
+        photofile = addform.elements["file"].files[0]; // using HTML5 fileAPI
+    if ((photocat == '') || (photoname == '')) { // test on html5 attr required
+        alert('Fill in required fields');
     } else {
         app.addPhoto({
             cat: photocat,
             name: photoname,
-            desc: photodesc
+            desc: photodesc,
+            file: photofile
         });
+        alert('successful');
+        app.changeView('albums');
     }
+}
+function createImg(file) {
+    console.log('faasasd'+file+'');
+    window.URL = window.URL || window.webkitURL;
+    var someblob = window.URL.createObjectURL(file);
+    console.log('someblob - '+someblob+'');
+    var img = document.createElement("img");
+    img.src = someblob;
+    img.width = 60;
+    img.height = 60;
+    img.onload = function() {
+        window.URL.revokeObjectURL(this.src);
+    }
+    return img;
+
+    /*
+    var myimage = document.getElementById("file").files[0]
+    var img = document.createElement("img");
+    img.width = 60;
+    img.height = 60;
+    window.URL = window.URL || window.webkitURL;
+    img.src = window.URL.createObjectURL(myimage);
+    img.onload = function() {
+        window.URL.revokeObjectURL(this.src);
+      }
+    var logo = document.getElementById("logo")
+    logo.appendChild(img)
+    */
+
 }
