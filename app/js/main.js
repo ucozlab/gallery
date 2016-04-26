@@ -166,7 +166,7 @@ function formValidate(event) {
     }
 }
 function createImg(file) {
-    console.log('faasasd'+file+'');
+    /*console.log('faasasd'+file+'');
     window.URL = window.URL || window.webkitURL;
     var someblob = window.URL.createObjectURL(file);
     console.log('someblob - '+someblob+'');
@@ -176,8 +176,18 @@ function createImg(file) {
     img.height = 60;
     img.onload = function() {
         window.URL.revokeObjectURL(this.src);
-    }
-    return img;
+    }*/
+    var myimage = document.getElementById("file").files[0]
+    var img = document.createElement("img");
+    img.width = 60;
+    img.height = 60;
+    window.URL = window.URL || window.webkitURL;
+    img.src = window.URL.createObjectURL(myimage);
+    img.onload = function() {
+        window.URL.revokeObjectURL(this.src);
+      }
+    console.log(''+img + 'asdasd !');
+    return document.getElementById("logo").appendChild(img);
 
     /*
     var myimage = document.getElementById("file").files[0]
