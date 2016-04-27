@@ -206,10 +206,24 @@ function createImg() { // using fileAPI
     } else {
         file = input.files[0];
         fr = new FileReader();
-        fr.onload = createImage;
+        fr.onload = function() {
+            img = new Image();
+            img.onload = function() {
+                var canvas = document.getElementById("canvas")
+                canvas.width = img.width;
+                canvas.height = img.height;
+                var ctx = canvas.getContext("2d");
+                ctx.drawImage(img, 0, 0);
+                imgsrc = canvas.toDataURL("image/png");
+                return imgsrc; // return of the function
+            };
+            img.src = fr.result;
+        };
         fr.readAsDataURL(file);
     }
-
+/*onload return value
+http://stackoverflow.com/questions/7434371/image-onload-function-with-return
+*/
     function createImage() {
         img = new Image();
         img.onload = imageLoaded;
@@ -219,13 +233,7 @@ function createImg() { // using fileAPI
     }
 
     function imageLoaded() {
-        var canvas = document.getElementById("canvas")
-        canvas.width = img.width;
-        canvas.height = img.height;
-        var ctx = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0);
-        imgsrc = canvas.toDataURL("image/png");
-        return imgsrc; // return of the function
+
 
     }
     //alert(imgsrc);
