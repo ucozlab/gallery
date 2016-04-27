@@ -63,6 +63,7 @@ h2 {
     @include box-shadow(0 0 6px rgba(0, 0, 0, 0.27));
     background: #ffffff;
     padding: 15px;
+    margin-bottom: $forty/2;
 }
 
 .copyright {
@@ -82,7 +83,9 @@ h2 {
     position: relative;
     z-index: 10;
 }
-
+#main {
+    padding-bottom: $forty;
+}
 .button {
     i {
         vertical-align: middle;
@@ -228,4 +231,7 @@ fieldset {
     .b-cat {
         font-size: 15px;
     }
+}
+canvas {
+    max-width: 100%;
 }

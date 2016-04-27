@@ -119,12 +119,7 @@ app.addPhoto = function (params) {
     params.img = createImg(params.file);
     var div = document.createElement('div');
     div.className = "col-md-3";
-    div.innerHTML = '<div class="block" id="'+GLOBALID+'">'
-        +'<div class="b-img"><a href="app.photopage(this)"><img src="'+params.img+'"></a></div>'
-        +'<div class="b-name h2">'+params.name+'</div>'
-        +'<div class="b-cat additional"><i class="material-icons inline-block">folder</i> '+params.cat+'</div>'
-        +'<div class="b-desc">'+params.desc+'</div>'
-        +'</div>';
+    div.innerHTML = '<div class="block" id="' + GLOBALID + '">' + '<div class="b-img"><a href="app.photopage(this)"><canvas id="canvas"></canvas><img src="' + params.img + '"></a></div>' + '<div class="b-name h2">' + params.name + '</div>' + '<div class="b-cat additional"><i class="material-icons inline-block">folder</i> ' + params.cat + '</div>' + '<div class="b-desc">' + params.desc + '</div>' + '</div>';
     var list = document.getElementById('albums');
     var arr = [];
     for (var i = 0; i < list.childNodes.length; i++) {
@@ -165,28 +160,20 @@ function formValidate(event) {
         app.changeView('albums');
     }
 }
+
 function createImg(file) {
-    /*console.log('faasasd'+file+'');
-    window.URL = window.URL || window.webkitURL;
-    var someblob = window.URL.createObjectURL(file);
-    console.log('someblob - '+someblob+'');
-    var img = document.createElement("img");
-    img.src = someblob;
-    img.width = 60;
-    img.height = 60;
-    img.onload = function() {
-        window.URL.revokeObjectURL(this.src);
-    }*/
+    /*
     var myimage = document.getElementById("file").files[0]
     var img = document.createElement("img");
     img.width = 60;
     img.height = 60;
     window.URL = window.URL || window.webkitURL;
     img.src = window.URL.createObjectURL(myimage);
-    img.onload = function() {
+    img.id = 'myImage';
+    img.onload = function () {
         window.URL.revokeObjectURL(this.src);
-      }
-    console.log(''+img + 'asdasd !');
+    }
+    console.log('' + img + 'asdasd !');
     return document.getElementById("logo").appendChild(img);
 
     /*
@@ -202,5 +189,51 @@ function createImg(file) {
     var logo = document.getElementById("logo")
     logo.appendChild(img)
     */
+    loadImage();
+}
 
+function loadImage() { // using fileAPI
+    var input, file, fr, img;
+
+    if (typeof window.FileReader !== 'function') {
+        write("The file API isn't supported on this browser yet.");
+        return;
+    }
+
+    input = document.getElementById('file');
+    if (!input) {
+        alert("Um, couldn't find the imgfile element.");
+    } else if (!input.files) {
+        alert("This browser doesn't seem to support the `files` property of file inputs.");
+    } else if (!input.files[0]) {
+        alert("Please select a file before clicking 'Load'");
+    } else {
+        file = input.files[0];
+        fr = new FileReader();
+        fr.onload = createImage;
+        fr.readAsDataURL(file);
+    }
+
+    function createImage() {
+        img = new Image();
+        img.onload = imageLoaded;
+        img.src = fr.result;
+    }
+
+    function imageLoaded() {
+        var canvas = document.getElementById("canvas")
+        canvas.width = img.width;
+        canvas.height = img.height;
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+        var imgsrc = canvas.toDataURL("image/png");
+        console.log(imgsrc);
+        localStorage.setItem('foo',imgsrc);
+    }
+
+    function write(msg) {
+        var p = document.createElement('p');
+        p.innerHTML = msg;
+        document.body.appendChild(p);
+    }
 }

@@ -1,94 +1,507 @@
-<!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>File(s) size</title>
-<!--<script>
-function updateSize() {
-  var nBytes = 0,
-      oFiles = document.getElementById("uploadInput").files,
-      nFiles = oFiles.length;
-  for (var nFileId = 0; nFileId < nFiles; nFileId++) {
-    nBytes += oFiles[nFileId].size;
-  }
-  var sOutput = nBytes + " bytes";
-  // optional code for multiples approximation
-  for (var aMultiples = ["KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB"], nMultiple = 0, nApprox = nBytes / 1024; nApprox > 1; nApprox /= 1024, nMultiple++) {
-    sOutput = nApprox.toFixed(3) + " " + aMultiples[nMultiple] + " (" + nBytes + " bytes)";
-  }
-  // end of optional code
-  document.getElementById("fileNum").innerHTML = nFiles;
-  document.getElementById("fileSize").innerHTML = sOutput;
-}
-</script>-->
-</head>
+    <head>
+	<title>$TITLE$ - $MODULE_NAME$ $SITE_NAME$</title>
+	<meta charset="utf-8">
+	<meta name="robots" content="noindex, nofollow">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link type="text/css" rel="StyleSheet" href="/_st/my.css" />
+	<link type="text/css" rel="StyleSheet" href="/css/jquery.formstyler.css" />
+	<link type="text/css" rel="StyleSheet" href="/css/shop-resize.css" />
+	<!--[if lt IE 9]>
+	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->
+    </head>
+    <body <?if($PAGE_ID$='invoices')?> class="invoices-page"<?endif?>>
+	<div id="page">
+	    $GLOBAL_AHEADER$
+	    <main>
+		<div id="main" <?if($PAGE_ID$='price')?> class="shop-price"<?endif?>>
+		    <img src="/images/bg.png" alt="bg" class="bg"/>
+		    <div class="wrapper">
+			<!-- <middle> -->
+			$GLOBAL_CLEFTER$
+			<div id="content">
+			    <!--<div class="breadcrumbs">
+			    <a href="/">Главная</a> <span>/</span> <?if($USER_LOGGED_IN$)?><a href="/shop/invoices">Мой профиль</a><?else?><a href="/shop/all">Каталог</a><?endif?> <span>/</span> <span>$TITLE$</span>
+			</div>-->
+			    <!-- <body> -->
 
-<body>
-<form name="uploadForm">
-<p><input id="uploadInput" type="file" name="myFiles" onchange="updateSize();" multiple> selected files: <span id="fileNum">0</span>; total size: <span id="fileSize">0</span></p>
-<p><input type="submit" value="Send file"></p>
-</form>
+			    <?if($ADD_ENTRY_LINK$)?><div style="text-align:right">[ <?if($PAGE_ID$=='invoices')?><a href="/panel/?a=shop;l=order" target=_blank><!--<s5457>-->Настройки<!--</s>--></a><?else?><a href="$ADD_ENTRY_LINK$"><!--<s4391>-->Добавить товар<!--</s>--></a><?endif?> ]</div><?endif?>
 
-№2
+			    <div id="cont-$MODULE_ID$-$PAGE_ID$"<?if($PAGE_ID$!='invoices')?> style="position:relative;"<?endif?>>
 
-<input type="file" id="fileElem" multiple accept="image/*" style="display:none" onchange="handleFiles(this.files)">
-<a href="#" id="fileSelect">Select some files</a>
-<div id="fileList">
-  <p>No files selected!</p>
-</div>
+				<?if($ORDERS_GEOMAP$)?><div style="float:right;">$ORDERS_GEOMAP$</div><?endif?>
+				<?if($ORDERS_EXPORT$)?><div style="float:right; padding:0 3px;">$ORDERS_EXPORT$</div><?endif?>
 
+				<h1 <?if($PAGE_ID$=='checkout')?>class="bordered"<?endif?>>$TITLE$</h1>
 
-<script>
-    window.URL = window.URL || window.webkitURL;
+				<?if($ORDER_NOTICE$)?>$ORDER_NOTICE$<?endif?>
 
-var fileSelect = document.getElementById("fileSelect"),
-    fileElem = document.getElementById("fileElem"),
-    fileList = document.getElementById("fileList");
-
-fileSelect.addEventListener("click", function (e) {
-  if (fileElem) {
-    fileElem.click();
-  }
-  e.preventDefault(); // prevent navigation to "#"
-}, false);
-
-function handleFiles(files) {
-  if (!files.length) {
-    fileList.innerHTML = "<p>No files selected!</p>";
-  } else {
-    var list = document.createElement("ul");
-    for (var i = 0; i < files.length; i++) {
-      var li = document.createElement("li");
-      list.appendChild(li);
-
-      var img = document.createElement("img");
-      img.src = window.URL.createObjectURL(files[i]);
-      img.height = 60;
-      img.onload = function() {
-        window.URL.revokeObjectURL(this.src);
-      }
-      li.appendChild(img);
-      var info = document.createElement("span");
-      info.innerHTML = files[i].name + ": " + files[i].size + " bytes";
-      li.appendChild(info);
-    }
-  }
-}
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
+				<?if($PAGE_ID$=='invoices')?>
+				<div class="invoices-settings">
+				    <div class="invoice-detal">
+					<div><span>Заказов: </span><strong>$NUM_ENTRIES$</strong></div>
+					<span>|</span>
+					<div><span>Оборот: </span><strong>$TOTAL$</strong></div>
+					<?if($PROFIT$)?>
+					<span>|</span>
+					<div><span>Прибыль: </span><strong>$PROFIT$</strong></div>
+					<?endif?>
+				    </div>
+				    <div class="wrap-setting">
+					<div>$STATUS_SELECTOR$</div><div>$ARCHIVE_SELECTOR$</div>
+				    </div>
+				    <div class="wrap-setting">
+					<div class="sum-select">$SUM_SELECTOR$</div>
+				    </div>
+				    <div class="wrap-setting">
+					<div class="date-select">$DATE_SELECTOR$</div>
+				    </div>
+				    <div class="wrap-setting">
+					<div>$PAYMENT_SELECTOR$</div><div>$DELIVERY_SELECTOR$</div><div>$ORDERS_SEARCH$</div>
+				    </div>
+				</div>
+				<?endif?>
+				<?if($PAGE_ID$=='checkout')?>
+				<?if($NUM_ENTRIES$)?>
+				<ul class="checkout-steps">
+				    <li><a href="javascript:void(0);" data-step="1" class="activated activenow"><span>1</span><span>Состав<br/>корзины</a></span></li>
+				    <li><a href="javascript:void(0);" data-step="2"><span>2</span><span>Личные<br/>данные</a></span></li>
+				    <li><a href="javascript:void(0);" data-step="3" class="cantclick"><span>3</span><span>Доставка<br/>и оплата</a></span></li>
+				    <li><a href="javascript:void(0);" data-step="4" class="cantclick"><span>4</span><span>Подтверждение<br/>заказа</a></span></li>
+				</ul>
+				<?else?>
+				<div style="text-align:center;line-height:40px;"><h3><!--<s5434>-->Корзина пуста<!--</s>--></h3><div class="continiue_shopping"><a href="/shop/all"><!--<s4451>-->Продолжить покупки<!--</s>--></a></div></div>
+				<?endif?>
+				<?endif?>
+				<div class="step1" <?if($PAGE_ID$='checkout')?> style="margin-top:-20px;display:block;"<?else?> style="display:block;" <?endif?>>
+				    <?if($PAGE_ID$=='price')?>
+				    <?if($NUM_PAGES$>1)?>
+				    <div style="text-align:right; padding-bottom:3px;"><!--<s3015>-->Страницы<!--</s>-->:
+					<?$DRAW_BLOCK$('PAGE_PREV','pprev')?>
+					<?$DRAW_BLOCK$('PAGE_SELECTOR','plist')?>
+					<?$DRAW_BLOCK$('PAGE_NEXT','pnext')?>
+				    </div>
+				    <?endif?>
 
 
+				    <form id="shop-price-form" action="" onsubmit="return price2Basket()">
+					<input type="hidden" name="mode" value="grp-add">
+					<table id="shop-price-list" class="gTable" width="100%" border="0" cellspacing="1" cellpadding="2">
+					    <tr><td class="gTableTop"><!--<s4374>-->Наименование<!--</s>--></td><td class="gTableTop" width="1%"><!--<s4371>-->Цена<!--</s>--></td><td class="gTableTop" width="1%"><!--<s4504>-->Количество<!--</s>--></td></tr>
+					    <?endif?>
+					    $BODY$
+					</table>
+					<?if($PAGE_ID$=='price')?><div id="shop-price-buttons" class="shop-page-wrap shop-more-scroll"><input type="submit" class="pinput" value="Добавить в корзину"> <input type="button" class="pinput" onclick="location.href='/shop/checkout'" value="Оформить заказ"> <a class="shop-more-scroll-close" href="" onclick="return shopPageScrollClose(this)" title="Закрыть"></a></div><?endif?>
+				    </form>
+				    <?if($NUM_ENTRIES$)?>
+				    <div class="clearfix order-bottom-buttons">
+					<div class="pull-left"><a href="/shop/all">&lt; Продолжить покупки</a></div>
+					<div class="pull-right">
+					    <a href="javascript:void(0);" onclick="clearall()">Очистить корзину</a>
+					    <a href="javascript:void(0);" data-step="2" class="basket">Оформить заказ <i class="fa fa-angle-right"></i></a>
+					</div>
+				    </div>
+				    <?endif?>
+				</div>
+				<form id="checkout-form" method="POST" action="" class="methods-list" onsubmit="return shopCheckOut();">
+				    <input type="hidden" name="mode" value="order" id="checkout-form-mode">
+				    <input type="hidden" name="ssid" id="checkout-form-ssid" value="$SSID$">
+				    <input type="hidden" name="payment_id" value="<?$PAYMENT_ID$?>" id="payment_id">
+				    <input type="hidden" name="delivery_id" value="<?$DELIVERY_ID$?>" id="delivery_id">
+				    <?if($PAGE_ID$=='checkout')?>
+				    <div class="step2">
+					<ul class="form-clone">
+					    <li class="input required">$ORDER_FIELD_4$ <span class="tool"></span></li>
+					    <li class="input">$ORDER_FIELD_5$</li>
+					    <li class="input">$ORDER_FIELD_3$</li>
+					    <li class="input required">$ORDER_FIELD_1$ <span class="tool"></span></li>
+					    <li>$ORDER_FIELD_2$</li>
+					    <li><span class="required">Обязательные для заполнения поля.</span></li>
+					    <li>
+						<div class="clearfix order-bottom-buttons">
+						    <div class="pull-left"><a href="javascript:void(0);" data-step="1">&lt; Вернуться назад</a></div>
+						    <div class="pull-right">
+							<a href="javascript:void(0);" data-step="3" class="basket">Далее <i class="fa fa-angle-right"></i></a>
+						    </div>
+						</div>
+					    </li>
+					</ul>
+					<div class="overflow">
+					    <?if($USER_LOGGED_IN$)?><?else?><a href="$LOGIN_LINK$"><i class="fa fa-user"></i> Вход в аккаунт</a><?endif?>
+					</div>
+				    </div>
+				    <div class="step3">
+					<ul class="form-clone">
+					    <li class="input selects">$ORDER_FIELD_6$ <span class="tool"></span></li>
+					    <li class="input required">$ORDER_FIELD_7$ <span class="tool"></span></li>
+					    <li class="input required">$ORDER_FIELD_8$ <span class="tool"></span></li>
+					    <li>
+						<div class="selectdiv">
+						    <div class="select input">
+							<span>Способ оплаты</span>
+							<div class="selectoptions">
+							    <a href="javascript://" onclick="selectoplata(1, this)">Наличными при получении товара</a>
+							    <a href="javascript://" onclick="selectoplata(2, this)">Webmoney</a>
+							    <a href="javascript://" onclick="selectoplata(3, this)">Робокасса (интегратор платежных систем)</a>
+							    <a href="javascript://" onclick="selectoplata(4, this)">Банковские карты</a>
+							</div>
+						    </div>
+						</div>
+						$PAYMENT_LIST$
+					    </li>
+					    <li><span class="required">Обязательные для заполнения поля.</span></li>
+					    <li>
+						<div class="clearfix order-bottom-buttons">
+						    <div class="pull-left"><a href="javascript:void(0);" data-step="2">&lt; Вернуться назад</a></div>
+						    <div class="pull-right">
+							<a href="javascript:void(0);" data-step="4" class="basket">Далее <i class="fa fa-angle-right"></i></a>
+						    </div>
+						</div>
+					    </li>
+					</ul>
+					<!--<?if($DELIVERY_LIST$)?>Способ доставки $DELIVERY_LIST$ <?endif?>-->
+				    </div>
+				    <div class="step4">
+
+					<ul class="order_info">
+					    <li><span>Заказ</span><?if($ORDER_NUM$ >= 1)?><?if($ORDER_NUM$ == 1)?>1 товар<?endif?><?if($ORDER_NUM$ > 1 && $ORDER_NUM$ < 4)?>$ORDER_NUM$ товара<?endif?><?if($ORDER_NUM$ >= 5 && $ORDER_NUM$ < 21)?>$ORDER_NUM$ товаров <?endif?><?if($ORDER_NUM$ == 21)?>21 товар<?endif?><?if($ORDER_NUM$ >= 22 && $ORDER_NUM$ < 25)?>$ORDER_NUM$ товара<?endif?><?if($ORDER_NUM$ >= 25 && $ORDER_NUM$ < 31)?>$ORDER_NUM$ товаров<?endif?><?if($ORDER_NUM$ == 31)?>31 товар<?endif?><?if($ORDER_NUM$ >= 32 && $ORDER_NUM$ < 35)?>$ORDER_NUM$ товара<?endif?><?if($ORDER_NUM$ >= 35 && $ORDER_NUM$ < 41)?>$ORDER_NUM$ товаров<?endif?>
+						<?if($ORDER_NUM$ == 41)?>41 товар<?endif?><?if($ORDER_NUM$ >= 42 && $ORDER_NUM$ < 45)?>$ORDER_NUM$ товара<?endif?><?if($ORDER_NUM$ >= 45 && $ORDER_NUM$ < 51)?>$ORDER_NUM$ товаров<?endif?><?if($ORDER_NUM$ == 51)?>51 товар<?endif?><?if($ORDER_NUM$ >= 52 && $ORDER_NUM$ < 55)?>$ORDER_NUM$ товара<?endif?><?if($ORDER_NUM$ >= 55 && $ORDER_NUM$ < 61)?>$ORDER_NUM$ товаров<?endif?><?if($ORDER_NUM$ == 61)?>61 товар<?endif?><?if($ORDER_NUM$ >= 62 && $ORDER_NUM$ < 65)?>$ORDER_NUM$ товара<?endif?><?if($ORDER_NUM$ >= 65 && $ORDER_NUM$ < 71)?>$ORDER_NUM$ товаров<?endif?><?if($ORDER_NUM$ == 71)?>71 товар<?endif?><?if($ORDER_NUM$ >= 72 && $ORDER_NUM$ < 75)?>$ORDER_NUM$ товара<?endif?><?if($ORDER_NUM$ >= 75 && $ORDER_NUM$ < 81)?>$ORDER_NUM$ товаров<?endif?><?if($ORDER_NUM$ == 81)?>81 товар<?endif?>
+						<?if($ORDER_NUM$ >= 82 && $ORDER_NUM$ < 85)?>$ORDER_NUM$ товара<?endif?><?if($ORDER_NUM$ >= 85 && $ORDER_NUM$ < 91)?>$ORDER_NUM$ товаров<?endif?><?if($ORDER_NUM$ == 91)?>91 товар<?endif?>
+						<?if($ORDER_NUM$ >= 92)?>$ORDER_NUM$ товаров<?endif?><?else)?>корзина пуста<?endif?> на сумму $ORDER_TOPAY_CURR$
+					    </li>
+					    <li>
+						<span>Оплата</span>
+						<div class="field_payment"></div>
+					    </li>
+					    <li>
+						<span>Адрес доставки</span>
+						<div class="field_address"></div>
+					    </li>
+					    <li>
+						<span>Комментарии к заказу</span>
+						<div class="field_comment"></div>
+					    </li>
+					    <li>
+						<span>Ваше имя</span>
+						<div class="field_name"></div>
+					    </li>
+					    <li>
+						<span>Контактный телефон</span>
+						<div class="field_phone"></div>
+					    </li>
+					    <li>
+						<div id="order-submit">$ORDER_BUTTON$</div>
+					    </li>
+					</ul>
+					<div class="clearfix">
+					    <div class="clearfix order-bottom-buttons">
+						<div class="pull-left"><a href="javascript:void(0);" data-step="3">&lt; Вернуться назад</a></div>
+						<div class="overflow">
+
+						</div>
+					    </div>
+					</div>
+				    </div>
+				</form>
+			    </div>
+			    <?endif?>
+
+			    <?if($PAGE_SELECTOR$)?><div class="shop-page-wrap">$PAGE_MORE$ <?$DRAW_BLOCK$('PAGE_PREV','pprev')?> <?$DRAW_BLOCK$('PAGE_SELECTOR','plist')?> <?$DRAW_BLOCK$('PAGE_NEXT','pnext')?></div><?endif?>
+
+			</div>
+
+			<!-- </body> -->
+		    </div>
+		    <!-- </middle> -->
+		</div><!--//endwrapper-->
+	    </div><!--//endmain-->
+	</main>
+    </div><!--//endpage-->
+    <div class="page-buffer"></div>
+    $GLOBAL_BFOOTER$
+    <script>
+	var def = /.+@.+\..+/i;
+	var tel = /^(\+?\d+)?\s*(\(\d+\))?[\s-]*([\d-]*)$/;
+	$('#order-table .order-item-img img').each(function(){
+	    var src = $(this).attr('src');
+	    src = src.split('s.jpg');
+	    $(this).attr('src',src[0] + '.jpg');
+	    if($(this).attr('src') == '.jpg') {
+		$(this).attr('src','/images/cap.jpg');
+		$(this).unwrap();
+	    }
+	});
+	$('#order-table .order-item-cnt').each(function(){
+	    $(this).prepend('<a href="javascript://" class="js-inc minus" data-incval="-1"><i class="fa fa-angle-down"></i></a>').append('<a href="javascript://" class="js-inc plus" data-incval="1"><i class="fa fa-angle-up"></i></a>');
+	});
+	$('#order-table .order-item-del').each(function(){
+	    $(this).append('<a href="javascript:void(0)" class="order-item-del-icon"><i class="fa fa-trash-o"></i></a>');
+	});
+	$('#order-table .order-item-del .order-item-del-icon').click(function(){
+	    $(this).prev().attr('checked','checked');
+	    $('#order-but-recalc').trigger('click');
+	});
+	$('#order-table .order-item-cnt').each(function () {
+	    var $quantity = $(this).find('input[type=text]');
+	    $(this).find('.js-inc').on('click', function () {
+		var currentQuantity = $quantity.val();
+		if (!isNaN(currentQuantity) && currentQuantity > 0) {
+		    var newVal = parseInt(currentQuantity) + $(this).data('incval');
+		    if (newVal) {
+			$quantity.val(newVal);
+		    }
+		}
+		// $(this).parent().find('input[type=text]').select();
+		// return checkNumber($(this).parent().find('input[type=text]'), event, '1');
+	    });
+	});
+
+	var clearall = function(){
+	    $('#order-table .order-item-del input[type=checkbox]').attr('checked','checked');
+	    $('#order-but-recalc').trigger('click');
+	}
+	    /* $(function() {
+var text = $('.order-total[align]').text();
+var text2 = $('.order-total[colspan]').text();
+$('.order-total[colspan]').html('<span>'+text+'</span><span>'+text2+'</span>');
+$('.order-total[colspan]').attr('colspan','7');
+$('.order-total[colspan]').siblings().css('display','none');
+});*/
+     $(function() {
+	 $('#order-table tbody tr:last-child td:first').attr('colspan','2');
+	 $('#order-table .order-total:eq(1)').attr({'colspan':'1','align':'left'});
+	 $('#order-but-recalc').wrap('<span class="order-but-rec-span"></span>');
+	 $('#order-table tbody tr:last').append('<td>' + $('#order-table .order-but-rec-span').parent().html() + '</td>');
+	 $('#order-table .order-but-rec-span:first').remove();
+     });
+     $('#checkout-form .label').each(function(){
+	 var text = $(this).text();
+	 $(this).next('input,textarea').attr('placeholder',text);
+	 $(this).next('select').prepend('<option value="'+text+'" selected>'+text+'</option>');
+     });
+     $(function() {
+	 var step;
+	 function stepchange() {
+	     if (!($('.checkout-steps a[data-step="'+step+'"]').hasClass('activenow'))) {
+		 $('.checkout-steps li a').removeClass('activenow');
+		 $('.checkout-steps a[data-step="'+step+'"]').addClass('activated').addClass('activenow');
+		 $('#cont-shop-checkout div[class*="step"]').fadeOut(600);
+		 setTimeout(function() {
+		     $('.step'+step+'').fadeIn(500);
+		 }, 500);
+	     }
+	 }
+	 $('[data-step]').click(function(){
+	     step = $(this).attr('data-step');
+	     if (step == '1') {
+		 stepchange();
+	     }
+	     if (step == '2') {
+		 if (!(($('.step2 .form-clone li > input#order-fld-4').val() == "") || (!tel.test($('.step2 .form-clone li > input#order-fld-1').val())) || ($('.step2 .form-clone li > input#order-fld-1').val() == ""))){
+		     $('.checkout-steps a[data-step="3"]').removeClass('cantclick');
+		 }
+		 stepchange();
+	     }
+	     if (step == '3') {
+		 if (($('.step2 .form-clone li > input#order-fld-4').val() == "") || (!tel.test($('.step2 .form-clone li > input#order-fld-1').val())) || ($('.step2 .form-clone li > input#order-fld-1').val() == "")) {
+		     if($('.step2 .form-clone li > input#order-fld-4').val() == "") {
+			 $('.step2 .form-clone li > input#order-fld-4').addClass('borderRed');
+		     }
+		     if($('.step2 .form-clone li > input#order-fld-1').val() == "" || (!tel.test($('.step2 .form-clone li > input#order-fld-1').val()))) {
+			 $('.step2 .form-clone li > input#order-fld-1').addClass('borderRed');
+		     }
+		 }
+		 else {
+		     $('.step2 .form-clone li > input#order-fld-4').removeClass('borderRed');
+		     $('.step2 .form-clone li > input#order-fld-1').removeClass('borderRed');
+		     if (!($('.checkout-steps a[data-step="2"]').hasClass('activated'))){
+			 $('.checkout-steps a[data-step="2"]').addClass('activated');
+		     }
+		     $('.checkout-steps a[data-step="3"]').removeClass('cantclick');
+		     stepchange();
+		 }
+	     }
+	     if (step == '4') {
+		 if (($('.step3 .form-clone li > input#order-fld-7').val() == "") || ($('.step3 .form-clone li > textarea#order-fld-8').val() == "")){
+		     if($('.step3 .form-clone li > input#order-fld-7').val() == "") {
+			 $('.step3 .form-clone li > input#order-fld-7').addClass('borderRed');
+		     }
+		     if($('.step3 .form-clone li > textarea#order-fld-8').val() == "") {
+			 $('.step3 .form-clone li > textarea#order-fld-8').addClass('borderRed');
+		     }
+		 }
+		 else if( $('.step3 .select > span').text() == 'Способ оплаты') {
+		     alert('Не выбран способ оплаты');
+		 }
+		 else {
+		     $('.checkout-steps a[data-step="3"]').removeClass('cantclick');
+		     $('.checkout-steps a[data-step="4"]').removeClass('cantclick');
+		     $('.field_payment').text($('.step3 .select > span').text());
+		     $('.field_address').text("" + $('#order-fld-6').val() + " " + $('#order-fld-7').val() + " " + $('#order-fld-8').val() + "");
+		     $('.field_comment').text($('#order-fld-2').val());
+		     $('.field_name').text("" + $('#order-fld-4').val() + " " + $('#order-fld-5').val() + "");
+		     $('.field_phone').text($('#order-fld-1').val());
+		     stepchange();
+		 }
+	     }
+	 });
+	 function cantclick() {
+	     $('.checkout-steps a.cantclick').click(function(e){
+		 e.preventDefault();
+		 e.stopPropagation();
+	     });
+	 }
+	 cantclick();
+
+     });
+     function keyup(a){
+	 if($(a).is('input#order-fld-4')){
+	     if ($('.step2 .form-clone li > input#order-fld-4').val() == ""){
+		 $(a).addClass('borderRed');
+	     }
+	     else{
+		 $(a).removeClass('borderRed');
+	     }
+	 }
+	 else if ($(a).is('input#order-fld-1')){
+	     if ((!tel.test($('.step2 .form-clone li > input#order-fld-1').val())) || ($('.step2 .form-clone li > input#order-fld-1').val() == "")){
+		 $(a).addClass('borderRed');
+		 var placeholderText = $(a).attr('placeholder');
+		 if ( !($('.checkout-steps a[data-step="3"]').hasClass('cantclick')) ) {
+		     $('.checkout-steps a[data-step="3"]').addClass('cantclick');
+		     //$('.step2 .form-clone li a.basket').addClass('cantclick');
+		     cantclick();
+		 }
+		 if ((!tel.test($('.step2 .form-clone li > input#order-fld-1').val()))){
+		     $(a).next().text('Некорректно заполнено поле ' + placeholderText);
+		 }
+		 if (($('.step2 .form-clone li > input#order-fld-1').val() == "")){
+		     $(a).next().text('Не заполнено поле ' + placeholderText);
+		 }
+	     }
+	     else{
+		 $(a).removeClass('borderRed');
+	     }
+	 }
+	 if (($('.step2 .form-clone li > input#order-fld-4').val() == "") || ($('.step2 .form-clone li > input#order-fld-1').val() == "")) {
+	     if ( !($('.checkout-steps a[data-step="3"]').hasClass('cantclick')) ) {
+		 $('.checkout-steps a[data-step="3"]').addClass('cantclick');
+		 //$('.step2 .form-clone li a.basket').addClass('cantclick');
+		 cantclick();
+	     }
+	 }
+	 else {
+	     $('.checkout-steps a[data-step="3"]').removeClass('cantclick');
+	     //$('.step2 .form-clone li a.basket').removeClass('cantclick');
+	 }
+     }
+     function keyup2(a){
+	 if($(a).is('input#order-fld-7')){
+	     if ($('.step3 .form-clone li > input#order-fld-7').val() == ""){
+		 $(a).addClass('borderRed');
+	     }
+	     else{
+		 $(a).removeClass('borderRed');
+	     }
+	 }
+	 else if($(a).is('textarea#order-fld-8')){
+	     if ($('.step3 .form-clone li > textarea#order-fld-8').val() == ""){
+		 $(a).addClass('borderRed');
+	     }
+	     else{
+		 $(a).removeClass('borderRed');
+	     }
+	 }
+	 if (($('.step3 .form-clone li > input#order-fld-7').val() == "") || ($('.step3 .form-clone li > textarea#order-fld-8').val() == "") || ( $('.step3 .select > span').text() == 'Способ оплаты')){
+	     $('.checkout-steps a[data-step="3"]').addClass('cantclick');
+	     //$('.step2 .form-clone li a.basket').addClass('cantclick');
+	     cantclick();
+	 }
+	 else {
+	     $('.checkout-steps a[data-step="4"]').removeClass('cantclick');
+	     //$('.step3 .form-clone li a.basket').removeClass('cantclick');
+	 }
+     }
+     //keyup();
+     //keyup2();
+     $(".step2 .form-clone li > input").keyup(function(e){
+	 keyup($(this));
+     });
+     $(".step3 .form-clone li > input").keyup(function(e){
+	 keyup2($(this));
+     });
+     $('#order-fld-3').attr('placeholder','E-mail');
+     $('#order-fld-4').attr('placeholder','Имя');
+     $('#order-fld-5').attr('placeholder','Фамилия');
+     $('#order-fld-1').attr('placeholder','Телефон');
+     $('#order-fld-2').attr('placeholder','Комментарии к заказу');
+     $('#order-fld-6').attr('placeholder','Страна');
+     $('#order-fld-7').attr('placeholder','Город');
+     $('#order-fld-8').attr('placeholder','Адрес');
+     $('#order-submit #order-button').val('Подтвердить заказ');
+
+     //mailform
+     function selectoplata(event, element){
+	 var text = $(element).text();
+	 $('.select > span').text(text);
+	 $('label[for="pay-type-'+event+'"]').trigger('click');
+	 $('.select > span').removeClass('activated');
+	 $('.select > span').next().slideUp(500);
+	 keyup2();
+     }
+
+     $('.tool').each(function(){
+	 var placeholderText = $(this).prev().attr('placeholder');
+	 $(this).text('Не заполнено поле ' + placeholderText);
+     });
+     $(document).ready(function(){
+	 $('.jq-selectbox__select').click(function(event){
+	     if ($(this).hasClass('activated')) {
+		 $(this).removeClass('activated');
+		 return false;
+	     }
+	     else {
+		 $('.jq-selectbox__select').removeClass('activated');
+		 $(this).addClass('activated');
+	     }
+	     event.stopPropagation();
+	 });
+	 $('body').on('click', function(){
+	     $('.jq-selectbox__select').removeClass('activated');
+	 });
+     });
+    </script>
+    <script src="/js/jquery.formstyler.min.js"></script>
+    <script>
+	$('.step3 select option[value="Россия"]').selected();
+	$('.step3 select').styler();
+    </script>
+    <?if($PAGE_ID$='invoices')?>
+    <script>
+	document.getElementsByClassName('sum-select')[0].firstChild.nodeValue = '';
+	$('.invoices-settings select, #invoice-form select').each(function(){
+	    var text = $(this).find('option:eq(0)').text();
+	    $(this).styler({
+		selectPlaceholder: text
+	    });
+	});
+	$('.invoices-settings input[type="button"]').val('Найти');
+    </script>
+    <?endif?>
+
+    <!-- Для дополнительных полей -->
+    <?if($PAGE_ID$=='edit')?>
+    <script type="text/javascript">
+	var others_good_id = $URI_ID$;
+    </script>
+    <script type="text/javascript" src="/js/other.js"></script>
+    <script type="text/javascript">
+	getothers(others_good_id);
+    </script>
+    <?endif?>
+    <!-- /Для дополнительных полей -->
 </body>
 </html>
