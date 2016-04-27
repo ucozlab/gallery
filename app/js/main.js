@@ -116,10 +116,10 @@ viewlinksItems.forEach(function (item, i) {
 app.init(); //initialize app
 
 app.addPhoto = function (params) {
-    params.img = createImg(params.file);
+    params.img = createImg();
     var div = document.createElement('div');
     div.className = "col-md-3";
-    div.innerHTML = '<div class="block" id="' + GLOBALID + '">' + '<div class="b-img"><a href="app.photopage(this)"><canvas id="canvas"></canvas><img src="' + params.img + '"></a></div>' + '<div class="b-name h2">' + params.name + '</div>' + '<div class="b-cat additional"><i class="material-icons inline-block">folder</i> ' + params.cat + '</div>' + '<div class="b-desc">' + params.desc + '</div>' + '</div>';
+    div.innerHTML = '<div class="block" id="' + GLOBALID + '">' + '<div class="b-img"><a href="app.photopage(this)"><img id="myImage" src="' + params.img + '"></a></div>' + '<div class="b-name h2">' + params.name + '</div>' + '<div class="b-cat additional"><i class="material-icons inline-block">folder</i> ' + params.cat + '</div>' + '<div class="b-desc">' + params.desc + '</div>' + '</div>';
     var list = document.getElementById('albums');
     var arr = [];
     for (var i = 0; i < list.childNodes.length; i++) {
@@ -127,6 +127,7 @@ app.addPhoto = function (params) {
             arr.push(list.childNodes[i]);
         }
     }
+    //localStorage.setItem('foo',imgsrc);
     arr[0].appendChild(div);
     GLOBALID++;
     console.log(params);
@@ -153,15 +154,14 @@ function formValidate(event) {
         app.addPhoto({
             cat: photocat,
             name: photoname,
-            desc: photodesc,
-            file: photofile
+            desc: photodesc
         });
         alert('successful');
         app.changeView('albums');
     }
 }
 
-function createImg(file) {
+function createImg() { // using fileAPI
     /*
     var myimage = document.getElementById("file").files[0]
     var img = document.createElement("img");
@@ -189,11 +189,7 @@ function createImg(file) {
     var logo = document.getElementById("logo")
     logo.appendChild(img)
     */
-    loadImage();
-}
-
-function loadImage() { // using fileAPI
-    var input, file, fr, img;
+    var input, file, fr, img, imgsrc;
 
     if (typeof window.FileReader !== 'function') {
         write("The file API isn't supported on this browser yet.");
@@ -218,6 +214,8 @@ function loadImage() { // using fileAPI
         img = new Image();
         img.onload = imageLoaded;
         img.src = fr.result;
+       // var myimage = document.getElementById("myImage");
+      //  myimage.src = img.src;
     }
 
     function imageLoaded() {
@@ -226,14 +224,9 @@ function loadImage() { // using fileAPI
         canvas.height = img.height;
         var ctx = canvas.getContext("2d");
         ctx.drawImage(img, 0, 0);
-        var imgsrc = canvas.toDataURL("image/png");
-        console.log(imgsrc);
-        localStorage.setItem('foo',imgsrc);
-    }
+        imgsrc = canvas.toDataURL("image/png");
+        return imgsrc; // return of the function
 
-    function write(msg) {
-        var p = document.createElement('p');
-        p.innerHTML = msg;
-        document.body.appendChild(p);
     }
+    //alert(imgsrc);
 }
