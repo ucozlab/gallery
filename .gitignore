@@ -1,2 +1,4 @@
-﻿.gitignore
+.gitignore
 node_modules
+app/js/test.js
+app/test.html
