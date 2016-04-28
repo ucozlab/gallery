@@ -17,22 +17,29 @@ $(window).load(function () {
 function openSearch(elem, e){
     e.preventDefault();
     $('#header #search').slideToggle(function() {
-        if($(this).is(':visible')) {
+        /*if($(this).is(':visible')) {
             if($('.mobile-login').hasClass('activated')) {
                 $('.mobile-login').removeClass('activated');
                 $('.account-links').slideUp();
             }
-            $('.searchdiv > .srchq').focus();
-            alert('some');
+            $('.searchdiv > .srchq').trigger('focus');
+            //alert('some');
         } else {
             $('.searchdiv > .srchq').blur();
-        }
+        }*/
     });
+    if ($(elem).hasClass('activated')) {
+        $(elem).removeClass('activated');
+        $('.searchdiv > input[type="text"]').blur();
+    } else {
+        $(elem).addClass('activated');
+         $('.searchdiv > input[type="text"]').focus();
+    }
     /*if ($(elem).hasClass('activated')) {
         $(elem).removeClass('activated');
         $('#header #search').css('height', '0px');
         $('.searchdiv > input[type="text"]').blur();
-    } else {
+    }  else {
         if($('.mobile-login').hasClass('activated')) {
             $('.mobile-login').removeClass('activated');
             $('.account-links').slideUp();
