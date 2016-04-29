@@ -116,7 +116,9 @@ viewlinksItems.forEach(function (item, i) {
 app.init(); //initialize app
 
 app.addPhoto = function (params) {
-    params.img = createImg();
+    params.img = createImg(function(result){
+        return result;
+    });
     var div = document.createElement('div');
     div.className = "col-md-3";
     div.innerHTML = '<div class="block" id="' + GLOBALID + '">' + '<div class="b-img"><a href="app.photopage(this)"><img id="myImage" src="' + params.img + '"></a></div>' + '<div class="b-name h2">' + params.name + '</div>' + '<div class="b-cat additional"><i class="material-icons inline-block">folder</i> ' + params.cat + '</div>' + '<div class="b-desc">' + params.desc + '</div>' + '</div>';
@@ -161,34 +163,7 @@ function formValidate(event) {
     }
 }
 
-function createImg() { // using fileAPI
-    /*
-    var myimage = document.getElementById("file").files[0]
-    var img = document.createElement("img");
-    img.width = 60;
-    img.height = 60;
-    window.URL = window.URL || window.webkitURL;
-    img.src = window.URL.createObjectURL(myimage);
-    img.id = 'myImage';
-    img.onload = function () {
-        window.URL.revokeObjectURL(this.src);
-    }
-    console.log('' + img + 'asdasd !');
-    return document.getElementById("logo").appendChild(img);
-
-    /*
-    var myimage = document.getElementById("file").files[0]
-    var img = document.createElement("img");
-    img.width = 60;
-    img.height = 60;
-    window.URL = window.URL || window.webkitURL;
-    img.src = window.URL.createObjectURL(myimage);
-    img.onload = function() {
-        window.URL.revokeObjectURL(this.src);
-      }
-    var logo = document.getElementById("logo")
-    logo.appendChild(img)
-    */
+function createImg(callback) { // using fileAPI
     var input, file, fr, img, imgsrc;
 
     if (typeof window.FileReader !== 'function') {
@@ -215,26 +190,11 @@ function createImg() { // using fileAPI
                 var ctx = canvas.getContext("2d");
                 ctx.drawImage(img, 0, 0);
                 imgsrc = canvas.toDataURL("image/png");
-                return imgsrc; // return of the function
+                alert(imgsrc);
+                callback(imgsrc);
             };
             img.src = fr.result;
         };
         fr.readAsDataURL(file);
     }
-/*onload return value
-http://stackoverflow.com/questions/7434371/image-onload-function-with-return
-*/
-    function createImage() {
-        img = new Image();
-        img.onload = imageLoaded;
-        img.src = fr.result;
-       // var myimage = document.getElementById("myImage");
-      //  myimage.src = img.src;
-    }
-
-    function imageLoaded() {
-
-
-    }
-    //alert(imgsrc);
 }
