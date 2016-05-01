@@ -45,13 +45,10 @@ app.init = function () {
     GLOBALID = 1;
 }
 
-app.addPhoto = function (params) {
-    params.img = createImg(function(result){
-        return result;
-    });
+app.addPhoto = function (img, params) {
     var div = document.createElement('div');
     div.className = "col-md-3";
-    div.innerHTML = '<div class="block" id="' + GLOBALID + '">' + '<div class="b-img"><a href="app.photopage(this)"><img id="myImage" src="' + params.img + '"></a></div>' + '<div class="b-name h2">' + params.name + '</div>' + '<div class="b-cat additional"><i class="material-icons inline-block">folder</i> ' + params.cat + '</div>' + '<div class="b-desc">' + params.desc + '</div>' + '</div>';
+    div.innerHTML = '<div class="block" id="' + GLOBALID + '">' + '<div class="b-img"><a href="app.photopage(this)"><img id="myImage" src="' + img + '"></a></div>' + '<div class="b-name h2">' + params.name + '</div>' + '<div class="b-cat additional"><i class="material-icons inline-block">folder</i> ' + params.cat + '</div>' + '<div class="b-desc">' + params.desc + '</div>' + '</div>';
     var list = document.getElementById('albums');
     var arr = [];
     for (var i = 0; i < list.childNodes.length; i++) {

@@ -70,26 +70,26 @@ viewlinksItems.forEach(function (item, i) {
 });
 /*click functions end*/
 
-function formValidate(event) {
+function formValidate(event) { //create img and callback add.photo
     event.preventDefault();
-    var photocat = addform.elements["category"].value,
+    var datatosend,
+        photocat = addform.elements["category"].value,
         photoname = addform.elements["photoname"].value,
         photodesc = addform.elements["description"].value,
         photofile = addform.elements["file"].files[0]; // using HTML5 fileAPI
     if ((photocat == '') || (photoname == '')) { // test on html5 attr required
         alert('Fill in required fields');
     } else {
-        app.addPhoto({
+        datatosend = {
             cat: photocat,
             name: photoname,
             desc: photodesc
-        });
-        alert('successful');
-        app.changeView('albums');
+        }
+        createImg(datatosend, app.addPhoto); //get data from fields and send to createImg function
     }
 }
 
-function createImg(callback) { // using fileAPI
+function createImg(datatosend, callback) { // using fileAPI
     var input, file, fr, img, imgsrc;
 
     if (typeof window.FileReader !== 'function') {
@@ -116,8 +116,8 @@ function createImg(callback) { // using fileAPI
                 var ctx = canvas.getContext("2d");
                 ctx.drawImage(img, 0, 0);
                 imgsrc = canvas.toDataURL("image/png");
-                alert(imgsrc);
-                callback(imgsrc);
+                callback(imgsrc, datatosend); //app.addPhoto(created_image, data_from_fields)
+                app.changeView('albums');
             };
             img.src = fr.result;
         };
