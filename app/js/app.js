@@ -60,6 +60,8 @@ app.addPhoto = function (img, params) {
     arr[0].appendChild(div);
     GLOBALID++;
     console.log(params);
+    var loaderdiv = document.getElementById('addform');
+    addRemoveClass(loaderdiv, 'loader');
 }
 
 app.photoPage = function(link) {

@@ -80,6 +80,8 @@ function formValidate(event) { //create img and callback add.photo
     if ((photocat == '') || (photoname == '')) { // test on html5 attr required
         alert('Fill in required fields');
     } else {
+        var loaderdiv = document.getElementById('addform');
+        addRemoveClass(loaderdiv, 'loader');
         datatosend = {
             cat: photocat,
             name: photoname,

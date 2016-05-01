@@ -18,7 +18,10 @@
     -ms-transition: $parameters;
     transition: $parameters;
 }
-
+@mixin inline-block {
+    display: inline-block;
+    vertical-align: middle;
+}
 $main: #212121;
 $white: #ffffff;
 $gray: #a1a1a1;
@@ -57,7 +60,16 @@ h2 {
     font-size: 50px;
     font-weight: normal;
 }
-
+h3 {
+    margin: 0 0 $forty/4 0;
+    a {
+        color: inherit;
+        i {
+            @include inline-block;
+            margin: 0 3px 0 0;
+        }
+    }
+}
 .block {
     @include border-radius(2px);
     @include box-shadow(0 0 6px rgba(0, 0, 0, 0.27));
@@ -234,4 +246,19 @@ fieldset {
 }
 canvas {
     max-width: 100%;
+    display: none;
+}
+.loader {
+    position: relative;
+    &:after {
+        content: "";
+        background: rgba(255,255,255,0.5) url(../img/loader.gif) center center no-repeat;
+        position: absolute;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        display: block;
+        left: 0;
+        top: 0;
+    }
 }
