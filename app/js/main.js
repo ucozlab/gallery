@@ -31,6 +31,34 @@ function capitalizeFirstLetter(string) { // Uppercase first letter
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+function append(what, to) { //simple append
+    var appenddiv = document.getElementById(to);
+    if (appenddiv.childNodes.length > 0) {
+        var arr = [];
+        for (var i = 0; i < appenddiv.childNodes.length; i++) {
+            if (appenddiv.childNodes[i].nodeType == 1) { // check if text
+                arr.push(appenddiv.childNodes[i]);
+            }
+        };
+        arr[0].appendChild(what);
+    } else {
+        appenddiv.appendChild(what);
+    }
+}
+
+//check if localstorage
+function supports_html5_storage() {
+    try {
+        return 'localStorage' in window && window['localStorage'] !== null;
+    } catch (e) {
+        return false;
+    }
+}
+//run
+if (!supports_html5_storage()) {
+    alert('You can\'t use localstorage, please allow it or use another browser!');
+}
+
 /*indexedDB*/
 var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
 var IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
@@ -87,12 +115,12 @@ function formValidate(event) { //create img and callback add.photo
             name: photoname,
             desc: photodesc
         }
-        createImg(datatosend, app.addPhoto); //get data from fields and send to createImg function
+        createImg(datatosend, app.addPhoto, app.addToStorage); //get data from fields and send to createImg function
     }
 }
 
-function createImg(datatosend, callback) { // using fileAPI
-    var input, file, fr, img, imgsrc;
+function createImg(datatosend, callback, callback2) { // using fileAPI
+    var input, file, fr, img, loaderdiv = document.getElementById('addform');
 
     if (typeof window.FileReader !== 'function') {
         write("The file API isn't supported on this browser yet.");
@@ -102,23 +130,27 @@ function createImg(datatosend, callback) { // using fileAPI
     input = document.getElementById('file');
     if (!input) {
         alert("Um, couldn't find the imgfile element.");
+        addRemoveClass(loaderdiv, 'loader');
     } else if (!input.files) {
         alert("This browser doesn't seem to support the `files` property of file inputs.");
+        addRemoveClass(loaderdiv, 'loader');
     } else if (!input.files[0]) {
-        alert("Please select a file before clicking 'Load'");
+        alert("Please select a file before clicking 'Submit'");
+        addRemoveClass(loaderdiv, 'loader');
     } else {
         file = input.files[0];
         fr = new FileReader();
-        fr.onload = function() {
+        fr.onload = function () {
             img = new Image();
-            img.onload = function() {
+            img.onload = function () {
                 var canvas = document.getElementById("canvas")
                 canvas.width = img.width;
                 canvas.height = img.height;
                 var ctx = canvas.getContext("2d");
                 ctx.drawImage(img, 0, 0);
-                imgsrc = canvas.toDataURL("image/png");
-                callback(imgsrc, datatosend); //app.addPhoto(created_image, data_from_fields)
+                datatosend.img = canvas.toDataURL("image/png");
+                callback(datatosend); //app.addPhoto(created_image, data_from_fields)
+                callback2(datatosend);
                 app.changeView('albums');
             };
             img.src = fr.result;

@@ -1,3 +1,4 @@
+var GLOBALID = 0;
 /*app start*/
 function app() {
 
@@ -42,33 +43,40 @@ app.init = function () {
         app.changeView(route);
         hashChangeCallback();
     }
-    GLOBALID = 1;
-}
-
-app.addPhoto = function (img, params) {
-    var div = document.createElement('div');
-    div.className = "col-md-3";
-    div.innerHTML = '<div class="block" id="' + GLOBALID + '">' + '<div class="b-img"><a href="app.photopage(this)"><img id="myImage" src="' + img + '"></a></div>' + '<div class="b-name h2">' + params.name + '</div>' + '<div class="b-cat additional"><i class="material-icons inline-block">folder</i> ' + params.cat + '</div>' + '<div class="b-desc">' + params.desc + '</div>' + '</div>';
-    var list = document.getElementById('albums');
-    var arr = [];
-    for (var i = 0; i < list.childNodes.length; i++) {
-        if (list.childNodes[i].nodeType == 1) { // check if text
-            arr.push(list.childNodes[i]);
+    //check if hass local stored item then append them to page
+    if (localStorage.length) {
+        for ( var i = 0; i < localStorage.length; i++ ) {
+            var parsed = JSON.parse(localStorage.getItem(localStorage.key(i)));
+            app.addPhoto(parsed);
+            GLOBALID++;
         }
     }
-    //localStorage.setItem('foo',imgsrc);
-    arr[0].appendChild(div);
+}
+
+app.addPhoto = function (params) {
+    var div = document.createElement('div');
+    div.className = "col-md-3";
+    div.innerHTML = '<div class="block" id="item' + GLOBALID + '">' + '<div class="b-img"><a href="javacript:void(0)" onclick="app.photoPage(\'item' + GLOBALID + '\')"><img id="myImage" src="' + params.img + '"></a></div>' + '<div class="b-name h2">' + params.name + '</div>' + '<div class="b-cat additional"><i class="material-icons inline-block">folder</i> ' + params.cat + '</div>' + '<div class="b-desc">' + params.desc + '</div>' + '</div>';
+    append(div,'albums');
+}
+app.addToStorage = function (params) {
+    localStorage.setItem('item'+GLOBALID+'',JSON.stringify(params));
     GLOBALID++;
-    console.log(params);
     var loaderdiv = document.getElementById('addform');
     addRemoveClass(loaderdiv, 'loader');
 }
-
-app.photoPage = function(link) {
-    var parent = link.parentNode;
-    var photo = document.querySelector('.mainphoto .b-img');
-    photo.innerHTML(parent.childNodes[0]);
-    //<i class="material-icons inline-block">folder</i>
+app.photoPage = function(item) {
+    app.changeView('photo');
+    //go to localstorage and output data from it
+    var parsed = JSON.parse(localStorage.getItem(item));
+    var div1 = document.createElement('div');
+    div1.className = "b-img";
+    div1.innerHTML = '<img src="' + parsed.img + '">';
+    append(div1,'mainphoto');
+    var div2 = document.createElement('div');
+    div2.className = "b-content";
+    div2.innerHTML = '<div class="b-name h2">' + parsed.name + '</div><div class="b-cat additional"><i class="material-icons inline-block">folder</i> ' + parsed.cat + '</div><div class="b-desc">' + parsed.desc + '</div>';
+    append(div2,'maindesc');
 }
 
 app.init(); //initialize app
