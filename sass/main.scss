@@ -207,12 +207,7 @@ h3 {
     }
 }
 
-section {
-    display: none;
-    &.active {
-        display: block;
-    }
-}
+
 
 fieldset {
     display: inline-block;
