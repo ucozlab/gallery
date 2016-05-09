@@ -323,7 +323,33 @@ canvas {
   padding: 15px; }
   .categories h3 {
     margin: 0; }
-  .categories ul {
-    padding: 0 20px; }
-    .categories ul li {
-      list-style: square; }
+
+.catlist {
+  padding: 0 20px; }
+  .catlist li {
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    list-style: square; }
+    .catlist li a {
+      color: inherit; }
+      .catlist li a.active {
+        font-weight: bold; }
+    .catlist li:hover {
+      color: #5c8c31; }
+      .catlist li:hover a {
+        color: #5c8c31; }
+
+#items {
+  position: relative; }
+  #items:before {
+    content: "";
+    display: block;
+    position: absolute;
+    left: -15px;
+    top: 0;
+    height: 100%;
+    width: 0;
+    border-right: 1px solid #a1a1a1;
+    border-left: 1px solid #ffffff; }

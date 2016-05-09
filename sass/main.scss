@@ -328,10 +328,38 @@ canvas {
     h3 {
         margin: 0;
     }
-    ul {
-        padding: 0 $forty/2;
-        li {
-            list-style: square;
+}
+.catlist{
+    padding: 0 $forty/2;
+    li {
+        @include transition($all);
+        list-style: square;
+        a {
+            color: inherit;
+
+            &.active{
+                font-weight: bold;
+            }
         }
+        &:hover {
+            color: $greenhover;
+            a {
+                color: $greenhover;
+            }
+        }
+    }
+}
+#items {
+    position: relative;
+    &:before {
+        content: "";
+        display: block;
+        position: absolute;
+        left: -15px;
+        top:0;
+        height: 100%;
+        width: 0;
+        border-right: 1px solid $gray;
+        border-left: 1px solid $white;
     }
 }
