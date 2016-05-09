@@ -19,7 +19,7 @@
             <ul>
                 <li><a href="home">Home</a></li>
                 <li><a href="new">New Photo</a></li>
-                <li><a href="albums">My Gallery</a></li>
+                <li><a href="gallery">My Gallery</a></li>
                 <li><a href="contacts">Contacts</a></li>
             </ul>
         </nav>
@@ -49,7 +49,7 @@
                         <section id="new">
                             <h2>Add new photo</h2>
                             <div class="margin30">
-                                <fieldset>
+                                <fieldset class="inline">
                                     <legend>new photo</legend>
                                     <form action="create" id="addform" onsubmit="formValidate(event)">
                                         <select name="category" id="category" required>
@@ -65,46 +65,17 @@
                                         <textarea name="description" placeholder="Description"></textarea>
                                         <div class="file">
                                             <input type="file" name="file" id="file">
+                                            <input type="file" accept="image/*;capture=camera">
                                         </div>
                                         <input type="submit"  value="Submit">
                                     </form>
                                 </fieldset>
+                                <video autoplay class="inline"></video>
                             </div>
                         </section>
-                        <section id="albums">
+                        <section id="gallery">
                             <div class="row">
-                                <div class="col-md-3">
-                                    <div class="block" id="1">
-                                        <div class="b-img"><a href="javascript:void(0);" onclick="app.photoPage(this)"><img src="https://placekitten.com/300/200"></a></div>
-                                        <div class="b-name h2">a cat</div>
-                                        <div class="b-cat additional"><i class="material-icons inline-block">folder</i> cats</div>
-                                        <div class="b-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="block" id="2">
-                                        <div class="b-img"><a href="javascript:void(0);" onclick="app.photoPage(this)"><img src="https://placekitten.com/300/199"></a></div>
-                                        <div class="b-name h2">another cat</div>
-                                        <div class="b-cat additional"><i class="material-icons inline-block">folder</i> cats</div>
-                                        <div class="b-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="block" id="3">
-                                        <div class="b-img"><a href="javascript:void(0);" onclick="app.photoPage(this)"><img src="https://placekitten.com/300/201"></a></div>
-                                        <div class="b-name h2">funny cat</div>
-                                        <div class="b-cat additional"><i class="material-icons inline-block">folder</i> cats</div>
-                                        <div class="b-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="block" id="4">
-                                        <div class="b-img"><a href="javascript:void(0);" onclick="app.photoPage(this)"><img src="https://placekitten.com/300/202"></a></div>
-                                        <div class="b-name h2">very nice cat</div>
-                                        <div class="b-cat additional"><i class="material-icons inline-block">folder</i> cats</div>
-                                        <div class="b-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-                                    </div>
-                                </div>
+
                             </div>
                             <div class="row">
                                 <div class="col-xs-12">

@@ -310,3 +310,6 @@ canvas {
     display: block;
     left: 0;
     top: 0; }
+
+#contacts a i {
+  color: #5c8c31; }

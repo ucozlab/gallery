@@ -151,10 +151,23 @@ function createImg(datatosend, callback, callback2) { // using fileAPI
                 datatosend.img = canvas.toDataURL("image/png");
                 callback(datatosend); //app.addPhoto(created_image, data_from_fields)
                 callback2(datatosend);
-                app.changeView('albums');
+                app.changeView('gallery');
             };
             img.src = fr.result;
         };
         fr.readAsDataURL(file);
+    }
+}
+function checkIfEmpty(div, callback) {
+    var link = document.querySelector(div);
+    if (link.children.length < 1) {
+        if (callback) {
+            callback();
+            return;
+        } else {
+            return true;
+        }
+    } else {
+        return false;
     }
 }

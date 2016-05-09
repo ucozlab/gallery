@@ -55,14 +55,22 @@ app.init = function () {
             }
         }
     }
+    checkIfEmpty('#gallery .row:first-child', function(){
+        var galleryrow = document.querySelector('#gallery .row:first-child');
+        galleryrow.innerHTML = '<div class="col-xs-12">you don\'t have any albums yet</div>';
+    });
 }
 
 app.addPhoto = function (params, itemid) {
+    var galleryrow = document.querySelector('#gallery .row:first-child'); //simple check on empty row
+    if(galleryrow.innerHTML === '<div class="col-xs-12">you don\'t have any albums yet</div>') {
+        galleryrow.innerHTML = "";
+    }
     itemid = itemid || 'item'+GLOBALID+''; //if we add new global id will be the last element
     var div = document.createElement('div');
     div.className = "col-md-3";
     div.innerHTML = '<div class="block" id="' + itemid + '">' + '<div class="b-img"><a href="javacript:void(0)" onclick="app.remove(\'' + itemid + '\')" class="remove"><i class="material-icons">clear</i></a><a href="javacript:void(0)" onclick="app.photoPage(\'' + itemid + '\')"><img id="myImage" src="' + params.img + '"></a></div>' + '<div class="b-name h2">' + params.name + '</div>' + '<div class="b-cat additional"><i class="material-icons inline-block">folder</i> ' + params.cat + '</div>' + '<div class="b-desc">' + params.desc + '</div>' + '</div>';
-    append(div,'albums');
+    append(div,'gallery');
 }
 app.addToStorage = function (params, itemid) {
     itemid = itemid || 'item'+GLOBALID+''; //if we add new global id will be the last element
@@ -79,14 +87,8 @@ app.photoPage = function(item) {
     app.changeView('photo');
     //go to localstorage and output data from it
     var parsed = JSON.parse(localStorage.getItem(item));
-    var div1 = document.createElement('div');
-    div1.className = "b-img";
-    div1.innerHTML = '<img src="' + parsed.img + '">';
-    append(div1,'mainphoto');
-    var div2 = document.createElement('div');
-    div2.className = "b-content";
-    div2.innerHTML = '<div class="b-name h2">' + parsed.name + '</div><div class="b-cat additional"><i class="material-icons inline-block">folder</i> ' + parsed.cat + '</div><div class="b-desc">' + parsed.desc + '</div>';
-    append(div2,'maindesc');
+    document.getElementById('mainphoto').innerHTML = '<img src="' + parsed.img + '">';
+    document.getElementById('maindesc').innerHTML = '<div class="b-name h2">' + parsed.name + '</div><div class="b-cat additional"><i class="material-icons inline-block">folder</i> ' + parsed.cat + '</div><div class="b-desc">' + parsed.desc + '</div>';
 }
 app.remove = function(item) {
     var divtoremove = document.getElementById(item).parentElement; //col-md-3
