@@ -218,7 +218,6 @@ section {
 fieldset {
     display: inline-block;
     width: 100%;
-    max-width: $forty*12;
 }
 
 #addform {
@@ -313,6 +312,26 @@ canvas {
     a {
         i {
             color: $greenhover;
+        }
+    }
+}
+#addform2 {
+    input[type=text] {
+        width: 70%;
+    }
+    input[type=submit]{
+        width: 28%;
+    }
+}
+.categories{
+    padding: 15px;
+    h3 {
+        margin: 0;
+    }
+    ul {
+        padding: 0 $forty/2;
+        li {
+            list-style: square;
         }
     }
 }

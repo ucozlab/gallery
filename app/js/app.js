@@ -47,14 +47,17 @@ app.init = function () {
     if (localStorage.length) {
         for ( var i = 0; i < localStorage.length; i++ ) {
             var thiskey = localStorage.key(i);
-            if (thiskey.indexOf('item') > -1) { //check if localStorage has key, but not item
+            if (thiskey.indexOf('item') > -1) { //check if localStorage has items
                 var parsed = JSON.parse(localStorage.getItem(thiskey));
                 app.addPhoto(parsed, thiskey);
                 GLOBALID = parseInt(thiskey.split('item')[1]);
                 GLOBALID++;
+            } else if (thiskey.indexOf('cat') > -1) { //check if localStorage has cats
+
             }
         }
     }
+    //check if gallery is empty
     checkIfEmpty('#gallery .row:first-child', function(){
         var galleryrow = document.querySelector('#gallery .row:first-child');
         galleryrow.innerHTML = '<div class="col-xs-12">you don\'t have any albums yet</div>';
@@ -95,4 +98,22 @@ app.remove = function(item) {
     divtoremove.parentElement.removeChild(divtoremove);
     localStorage.removeItem(item);
 }
+app.addCat = function(event) {
+    event.preventDefault();
+
+    var firstli = document.querySelector('#catlist ul li:first-child'),
+        cat = addform2.elements["inputcat"].value,
+        li = document.createElement('li'),
+        option = document.createElement('option');
+    if (firstli.innerHTML === 'you don\'t have any albums yet') { //check if it is first cat
+        firstli.parentNode.removeChild(firstli);
+    }
+
+    li.innerHTML = cat;
+    option.innerHTML = cat;
+    append(li,'catlist');
+    append(option,'formselect');
+    addform2.elements["inputcat"].value = "";
+}
+
 app.init(); //initialize app

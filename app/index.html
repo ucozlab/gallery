@@ -44,42 +44,62 @@
                             <p class="greetings margin30">
                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                             </p>
-                            <a class="button button2 padding20" href="javascript:void(0)" onclick="app.changeView('new');" >Add new photo <i class="inline-block material-icons">navigate_next</i></a>
+                            <a class="button button2 padding20" href="javascript:void(0)" onclick="app.changeView('new');">Add new photo <i class="inline-block material-icons">navigate_next</i></a>
                         </section>
                         <section id="new">
-                            <h2>Add new photo</h2>
-                            <div class="margin30">
-                                <fieldset class="inline">
-                                    <legend>new photo</legend>
-                                    <form action="create" id="addform" onsubmit="formValidate(event)">
-                                        <select name="category" id="category" required>
-                                            <option value="" disabled selected="selected">Choose album...</option>
-                                            <option value="cats">Cats</option>
-                                            <option value="dogs">Dogs</option>
-                                            <option value="cars">Cars</option>
-                                            <option value="nature">Nature</option>
-                                        </select>
-                                        <div class="required">
-                                            <input type="text" name="photoname" required placeholder="Name">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <h2>Add new photo</h2>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="margin30"></div>
+                                    <fieldset class="inline">
+                                        <legend>new album</legend>
+                                        <form action="createcat" id="addform2" onsubmit="app.addCat(event)">
+                                            <input type="text" name="inputcat" required placeholder="Album name...">
+                                            <input type="submit" value="Submit">
+                                        </form>
+                                        <div class="categories">
+                                            <h3>Albums list:</h3>
+                                            <div id="catlist">
+                                                <ul>
+                                                    <li>you don't have any albums yet</li>
+                                                </ul>
+                                            </div>
                                         </div>
-                                        <textarea name="description" placeholder="Description"></textarea>
-                                        <div class="file">
-                                            <input type="file" name="file" id="file">
-                                            <input type="file" accept="image/*;capture=camera">
-                                        </div>
-                                        <input type="submit"  value="Submit">
-                                    </form>
-                                </fieldset>
-                                <video autoplay class="inline"></video>
+                                    </fieldset>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="margin30">
+                                        <fieldset class="inline">
+                                            <legend>new photo</legend>
+                                            <form action="create" id="addform" onsubmit="formValidate(event)">
+                                                <div id="formselect">
+                                                    <select name="category" id="category" required>
+                                                        <option value="" disabled selected="selected">Choose album...</option>
+                                                    </select>
+                                                </div>
+                                                <div class="required">
+                                                    <input type="text" name="photoname" required placeholder="Name">
+                                                </div>
+                                                <textarea name="description" placeholder="Description"></textarea>
+                                                <div class="file">
+                                                    <input type="file" name="file" id="file">
+                                                    <!--<input type="file" accept="image/*;capture=camera">-->
+                                                </div>
+                                                <input type="submit" value="Submit">
+                                            </form>
+                                        </fieldset>
+                                        <video autoplay class="inline"></video>
+                                    </div>
+                                </div>
                             </div>
                         </section>
                         <section id="gallery">
-                            <div class="row">
-
-                            </div>
+                            <div class="row"></div>
                             <div class="row">
                                 <div class="col-xs-12">
-                                    <div class="margin30"><a class="button button2 padding20" href="javascript:void(0)" onclick="app.changeView('new');" >Add new photo <i class="inline-block material-icons">navigate_next</i></a>
+                                    <div class="margin30"><a class="button button2 padding20" href="javascript:void(0)" onclick="app.changeView('new');">Add new photo <i class="inline-block material-icons">navigate_next</i></a>
                                     </div>
                                 </div>
                             </div>
@@ -103,7 +123,8 @@
                 </div>
             </div>
         </div>
-    </div><canvas id="canvas"></canvas>
+    </div>
+    <canvas id="canvas"></canvas>
     <footer>
         <div id="footer">
             <div class="copyright centertext">

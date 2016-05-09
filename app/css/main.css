@@ -179,8 +179,7 @@ section {
 
 fieldset {
   display: inline-block;
-  width: 100%;
-  max-width: 480px; }
+  width: 100%; }
 
 #addform .required {
   position: relative; }
@@ -313,3 +312,18 @@ canvas {
 
 #contacts a i {
   color: #5c8c31; }
+
+#addform2 input[type=text] {
+  width: 70%; }
+
+#addform2 input[type=submit] {
+  width: 28%; }
+
+.categories {
+  padding: 15px; }
+  .categories h3 {
+    margin: 0; }
+  .categories ul {
+    padding: 0 20px; }
+    .categories ul li {
+      list-style: square; }
