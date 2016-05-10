@@ -27,7 +27,7 @@ app.addPhoto = function (params, itemid) {
     itemid = itemid || 'item' + GLOBALID + ''; //if we add new global id will be the last element
     var div = document.createElement('div');
     div.className = "col-md-3";
-    div.innerHTML = '<div class="block" id="' + itemid + '">' + '<div class="b-img"><a href="javacript:void(0)" onclick="app.remove(\'' + itemid + '\')" class="remove"><i class="material-icons">clear</i></a><a href="javacript:void(0)" onclick="app.photoPage(\'' + itemid + '\')"><img id="myImage" src="' + params.img + '"></a></div>' + '<div class="b-name h2">' + params.name + '</div>' + '<div class="b-cat additional"><i class="material-icons inline-block">folder</i> ' + params.cat + '</div>' + '<div class="b-desc">' + params.desc + '</div>' + '</div>';
+    div.innerHTML = '<div class="block" id="' + itemid + '">' + '<div class="b-img"><a href="javacript:void(0)" onclick="app.remove(\'' + itemid + '\')" class="remove"><i class="material-icons">clear</i></a><a href="javacript:void(0)" onclick="app.photoPage(\'' + itemid + '\')"><img id="myImage" src="' + params.img + '"></a></div>' + '<div class="b-name h2"><a href="javacript:void(0)" onclick="app.photoPage(\'' + itemid + '\')">' + params.name + '</a></div>' + '<div class="b-cat additional"><i class="material-icons inline-block">folder</i> ' + params.cat + '</div>' + '<div class="b-desc">' + params.desc + '</div>' + '</div>';
     append(div, 'items');
 }
 app.addToStorage = function (params, itemid) {
@@ -54,8 +54,7 @@ app.catPage = function (item, event) {
 }
 
 app.onlySelected = function(subpage) {
-    var itemsrow = document.querySelector('#items .row');
-    itemsrow.innerHTML = "";
+    cleardiv('#items .row');
     for (var i = 0; i < localStorage.length; i++) {
         var thiskey = localStorage.key(i);
         var parsed = JSON.parse(localStorage.getItem(thiskey));
@@ -129,6 +128,16 @@ app.init = function () {
             app.changeView('gallery',subcat, app.onlySelected);
         } else {
             app.changeView(route);
+            if (route === 'gallery') {
+                cleardiv('#items .row');
+                for (var i = 0; i < localStorage.length; i++) {
+                    var thiskey = localStorage.key(i);
+                    var parsed = JSON.parse(localStorage.getItem(thiskey));
+                    if (thiskey.indexOf('item') > -1) {
+                        app.addPhoto(parsed, thiskey); //adding again
+                    }
+                }
+            }
         }
     }
     window.addEventListener('hashchange', hashChangeCallback, false);
@@ -149,6 +158,7 @@ app.init = function () {
     //check if hass local stored item then append them to page
     if (localStorage.length) {
         for (var i = 0; i < localStorage.length; i++) {
+            cleardiv('#items .row');
             var thiskey = localStorage.key(i);
             var parsed = JSON.parse(localStorage.getItem(thiskey));
             if (thiskey.indexOf('item') > -1) { //check if localStorage has items

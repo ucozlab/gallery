@@ -171,3 +171,7 @@ function checkIfEmpty(div, callback) {
         return false;
     }
 }
+function cleardiv(div){
+    var itemsrow = document.querySelector(div);
+    itemsrow.innerHTML = "";
+}
