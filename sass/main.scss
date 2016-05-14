@@ -94,6 +94,7 @@ h3 {
 
 .block {
     @include button;
+    @include inline-block;
     background: #ffffff;
     padding: 15px;
     margin-bottom: $forty/2;
@@ -349,7 +350,7 @@ canvas {
         }
     }
 }
-#items {
+#items, .innerpage {
     position: relative;
     &:before {
         content: "";
@@ -362,4 +363,7 @@ canvas {
         border-right: 1px solid $gray;
         border-left: 1px solid $white;
     }
+}
+#maindesc{
+    padding-right: 30px;
 }

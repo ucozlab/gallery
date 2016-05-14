@@ -16,15 +16,18 @@ app.changeView = function (text, subpage, callback) { //changeView
         callback(subpage);
     } else {
         location.hash = '!/' + text + '';
+        if(text === 'gallery'){
+            app.buildContent();
+        }
     }
 }
 
 app.addPhoto = function (params, itemid) {
     var itemsrow = document.querySelector('#items .row'); //simple check on empty row
-    if (itemsrow.innerHTML === '<div class="col-xs-12">you don\'t have any albums yet</div>') {
+    if (itemsrow.innerHTML === '<div class="col-xs-12">you don\'t have any photos yet</div>') {
         itemsrow.innerHTML = "";
     }
-    itemid = itemid || 'item' + GLOBALID + ''; //if we add new global id will be the last element
+    itemid = itemid || 'item' + GLOBALID + ''; //if we add, new global id will be the last element
     var div = document.createElement('div');
     div.className = "col-md-3";
     div.innerHTML = '<div class="block" id="' + itemid + '">' + '<div class="b-img"><a href="javacript:void(0)" onclick="app.remove(\'' + itemid + '\')" class="remove"><i class="material-icons">clear</i></a><a href="javacript:void(0)" onclick="app.photoPage(\'' + itemid + '\')"><img id="myImage" src="' + params.img + '"></a></div>' + '<div class="b-name h2"><a href="javacript:void(0)" onclick="app.photoPage(\'' + itemid + '\')">' + params.name + '</a></div>' + '<div class="b-cat additional"><i class="material-icons inline-block">folder</i> ' + params.cat + '</div>' + '<div class="b-desc">' + params.desc + '</div>' + '</div>';
@@ -44,7 +47,7 @@ app.addToStorage = function (params, itemid) {
 app.photoPage = function (item) {
     //go to localstorage and output data from it
     var parsed = JSON.parse(localStorage.getItem(item));
-    document.getElementById('mainphoto').innerHTML = '<img src="' + parsed.img + '">';
+    document.getElementById('mainphoto').innerHTML = '<div class="block"><img src="' + parsed.img + '"></div>';
     document.getElementById('maindesc').innerHTML = '<div class="b-name h2">' + parsed.name + '</div><div class="b-cat additional"><i class="material-icons inline-block">folder</i> ' + parsed.cat + '</div><div class="b-desc">' + parsed.desc + '</div>';
     app.changeView('photo');
 }
@@ -53,6 +56,25 @@ app.catPage = function (item, event) {
     app.changeView('gallery', item.text, app.onlySelected);
 }
 
+app.buildContent = function () {
+    cleardiv('#items .row');
+    if (localStorage.length) {
+        for (var i = 0; i < localStorage.length; i++) {
+            var thiskey = localStorage.key(i);
+            var parsed = JSON.parse(localStorage.getItem(thiskey));
+            if (thiskey.indexOf('item') > -1) { //check if localStorage has items
+                app.addPhoto(parsed, thiskey);
+                GLOBALID = parseInt(thiskey.split('item')[1]);
+                GLOBALID++;
+            }
+        }
+    }
+    //check if items is empty
+    checkIfEmpty('#items .row', function () {
+        var itemsrow = document.querySelector('#items .row');
+        itemsrow.innerHTML = '<div class="col-xs-12">you don\'t have any photos yet</div>';
+    });
+}
 app.onlySelected = function(subpage) {
     cleardiv('#items .row');
     for (var i = 0; i < localStorage.length; i++) {
@@ -64,12 +86,28 @@ app.onlySelected = function(subpage) {
             }
         }
     }
+    checkIfEmpty('#items .row', function () {
+        var itemsrow = document.querySelector('#items .row');
+        itemsrow.innerHTML = '<div class="col-xs-12">there are no photos in this cat</div>';
+    });
 }
 
 app.remove = function (item) {
     var divtoremove = document.getElementById(item).parentElement; //col-md-3
     divtoremove.parentElement.removeChild(divtoremove);
     localStorage.removeItem(item);
+    var route = location.hash.substr(3);
+    if (route.indexOf('#') > 0) {
+        checkIfEmpty('#items .row', function () {
+            var itemsrow = document.querySelector('#items .row');
+            itemsrow.innerHTML = '<div class="col-xs-12">there are no photos in this cat</div>';
+        });
+    } else {
+        checkIfEmpty('#items .row', function () {
+            var itemsrow = document.querySelector('#items .row');
+            itemsrow.innerHTML = '<div class="col-xs-12">you don\'t have any photos yet</div>';
+        });
+    }
 }
 app.addCat = function (event) {
     event.preventDefault();
@@ -84,7 +122,7 @@ app.addCat = function (event) {
         arr = JSON.parse(localStorage.getItem('albums'));
     }
     arr.push(newcat);
-    try {
+    try { // try is needed to see if the image is too big
         localStorage.setItem('albums', JSON.stringify(arr));
     } catch (err) {
         alert(err);
@@ -99,6 +137,8 @@ app.addFrontendCat = function(cat){
     if (firstli.innerHTML === 'you don\'t have any albums yet') { //check if it is first cat
         firstli.parentNode.removeChild(firstli);
         secondli.parentNode.removeChild(secondli);
+        li2.innerHTML = '<a href="javascript:void(0)" onclick="app.changeView(\'gallery\')">All</a>';
+        append(li2, 'catlist2');
     }
     li.innerHTML = '<a href="javascript:void(0)" onclick="app.catPage(this, event)">'+cat+'</a>';
     li2.innerHTML = '<a href="javascript:void(0)" onclick="app.catPage(this, event)">'+cat+'</a>';
@@ -113,7 +153,7 @@ app.init = function () {
     function hashChangeCallback() { //changeHistory
         if (/^\#\!/.test(location.hash)) {
             var stateParameters = {
-                foo: "bar"
+                foo: "bar" //test
             };
             route = location.hash.substr(3);
             history.replaceState(stateParameters, "" + capitalizeFirstLetter(route) + " - MyGallery SPA", location.hash);
@@ -128,16 +168,6 @@ app.init = function () {
             app.changeView('gallery',subcat, app.onlySelected);
         } else {
             app.changeView(route);
-            if (route === 'gallery') {
-                cleardiv('#items .row');
-                for (var i = 0; i < localStorage.length; i++) {
-                    var thiskey = localStorage.key(i);
-                    var parsed = JSON.parse(localStorage.getItem(thiskey));
-                    if (thiskey.indexOf('item') > -1) {
-                        app.addPhoto(parsed, thiskey); //adding again
-                    }
-                }
-            }
         }
     }
     window.addEventListener('hashchange', hashChangeCallback, false);
@@ -155,17 +185,12 @@ app.init = function () {
         changeRoute();
         hashChangeCallback();
     }
-    //check if hass local stored item then append them to page
+    //check if hass local stored cats then append them to page
     if (localStorage.length) {
         for (var i = 0; i < localStorage.length; i++) {
-            cleardiv('#items .row');
             var thiskey = localStorage.key(i);
             var parsed = JSON.parse(localStorage.getItem(thiskey));
-            if (thiskey.indexOf('item') > -1) { //check if localStorage has items
-                app.addPhoto(parsed, thiskey);
-                GLOBALID = parseInt(thiskey.split('item')[1]);
-                GLOBALID++;
-            } else if (thiskey.indexOf('albums') > -1) { //check if localStorage has cats
+            if (thiskey.indexOf('albums') > -1) {
                 for (var j = 0; j < parsed.length; j++) {
                     var cat = parsed[j];
                     app.addFrontendCat(cat);
@@ -173,11 +198,6 @@ app.init = function () {
             }
         }
     }
-    //check if items is empty
-    checkIfEmpty('#items .row', function () {
-        var itemsrow = document.querySelector('#items .row');
-        itemsrow.innerHTML = '<div class="col-xs-12">you don\'t have any albums yet</div>';
-    });
 }
 
 app.init(); //initialize app

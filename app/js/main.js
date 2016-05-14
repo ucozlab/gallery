@@ -110,6 +110,19 @@ function formValidate(event) { //create img and callback add.photo
     } else {
         var loaderdiv = document.getElementById('addform');
         addRemoveClass(loaderdiv, 'loader');
+
+        if (localStorage.length) { // check if localstorage allready have item with "trying to added" name
+            for (var i = 0; i < localStorage.length; i++) {
+                var thiskey = localStorage.key(i);
+                var parsed = JSON.parse(localStorage.getItem(thiskey));
+                if (parsed.name === photoname) { //check if localStorage has items
+                    alert('this photo allready exists!');
+                    addRemoveClass(loaderdiv, 'loader');
+                    return false;
+                }
+            }
+        }
+
         datatosend = {
             cat: photocat,
             name: photoname,
@@ -149,9 +162,9 @@ function createImg(datatosend, callback, callback2) { // using fileAPI
                 var ctx = canvas.getContext("2d");
                 ctx.drawImage(img, 0, 0);
                 datatosend.img = canvas.toDataURL("image/png");
+                app.changeView('gallery');
                 callback(datatosend); //app.addPhoto(created_image, data_from_fields)
                 callback2(datatosend);
-                app.changeView('gallery');
             };
             img.src = fr.result;
         };

@@ -44,6 +44,8 @@ h3 {
   -moz-transition: all 0.3s ease;
   -ms-transition: all 0.3s ease;
   transition: all 0.3s ease;
+  display: inline-block;
+  vertical-align: middle;
   background: #ffffff;
   padding: 15px;
   margin-bottom: 20px; }
@@ -341,9 +343,9 @@ canvas {
       .catlist li:hover a {
         color: #5c8c31; }
 
-#items {
+#items, .innerpage {
   position: relative; }
-  #items:before {
+  #items:before, .innerpage:before {
     content: "";
     display: block;
     position: absolute;
@@ -353,3 +355,6 @@ canvas {
     width: 0;
     border-right: 1px solid #a1a1a1;
     border-left: 1px solid #ffffff; }
+
+#maindesc {
+  padding-right: 30px; }
