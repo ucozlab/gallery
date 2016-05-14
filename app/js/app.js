@@ -36,7 +36,7 @@ app.addPhoto = function (params, itemid) {
     itemid = itemid || 'item' + GLOBALID + ''; //if we add, new global id will be the last element
     var div = document.createElement('div');
     div.className = "col-md-3";
-    div.innerHTML = '<div class="block" id="' + itemid + '">' + '<div class="b-img"><a href="javacript:void(0)" onclick="app.remove(\'' + itemid + '\')" class="remove"><i class="material-icons">clear</i></a><a href="javacript:void(0)" onclick="app.photoPage(\'' + itemid + '\',event)"><img id="myImage" src="' + params.img + '"></a></div>' + '<div class="b-name h2"><a href="javacript:void(0)" onclick="app.photoPage(\'' + itemid + '\',event)">' + params.name + '</a></div>' + '<div class="b-cat additional"><i class="material-icons inline-block">folder</i> ' + params.cat + '</div>' + '<div class="b-desc">' + params.desc + '</div>' + '</div>';
+    div.innerHTML = '<div class="block" id="' + itemid + '">' + '<div class="b-img"><a href="javacript:void(0)" onclick="app.remove(\'' + itemid + '\', event)" class="remove"><i class="material-icons">clear</i></a><a href="javacript:void(0)" onclick="app.photoPage(\'' + itemid + '\',event)"><img id="myImage" src="' + params.img + '"></a></div>' + '<div class="b-name h2"><a href="javacript:void(0)" onclick="app.photoPage(\'' + itemid + '\',event)">' + params.name + '</a></div>' + '<div class="b-cat additional"><i class="material-icons inline-block">folder</i> ' + params.cat + '</div>' + '<div class="b-desc">' + params.desc + '</div>' + '</div>';
     append(div, 'items');
 }
 app.addToStorage = function (params, itemid) {
@@ -111,7 +111,8 @@ app.addActiveClassToAsideCats = function (subpage) {
     }
 }
 
-app.remove = function (item) {
+app.remove = function (item, event) {
+    event.preventDefault();
     var divtoremove = document.getElementById(item).parentElement; //col-md-3
     divtoremove.parentElement.removeChild(divtoremove);
     localStorage.removeItem(item);
@@ -145,8 +146,7 @@ app.addCat = function (event) {
         }
     }
 
-    app.addFrontendCat(newcat);
-    addform2.elements["inputcat"].value = ""; //frontend end
+    app.addFrontendCat(newcat); //frontend end
 
     arr.push(newcat);
     try { // try is needed to see if the image is too big

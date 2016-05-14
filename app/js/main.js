@@ -76,6 +76,30 @@ viewlinksItems.forEach(function (item, i) {
 });
 /*click functions end*/
 
+//validate input type file
+var fileToRead = document.getElementById("file");
+fileToRead.addEventListener("change", function(event) {
+    var files = fileToRead.files;
+    var len = files.length;
+    // we should read just one file
+    if (len) {
+        var checked = document.getElementById('checked');
+        if (checked) {
+            checked.parentNode.removeChild(checked);
+        }
+        var div = document.createElement('div');
+        div.id = 'checked';
+        div.className = "inline-block green margin10";
+        div.innerHTML = '<i class="material-icons">check</i>';
+        document.getElementById('filediv').appendChild(div);
+    } else {
+        var divtoremove = document.getElementById('checked');
+        divtoremove.parentElement.removeChild(divtoremove);
+    }
+
+}, false);
+
+
 function formValidate(event) { //create img and callback add.photo
     event.preventDefault();
     var datatosend,
@@ -103,11 +127,23 @@ function formValidate(event) { //create img and callback add.photo
             name: photoname,
             desc: photodesc
         }
-        createImg(datatosend, app.addPhoto, app.addToStorage); //get data from fields and send to createImg function
+        if (document.getElementById("file").value.length) {
+            if (!photofile.name.match(/\.(jpg|jpeg|png|gif)$/)) {
+                alert('please choose a image file');
+                loader('addform');
+                return false;
+            } else {
+                createImg(datatosend, app.addPhoto, app.addToStorage); //get data from fields and send to createImg function
+            }
+        } else {
+            //var videoImage = document.getElementById("videoImage");
+            datatosend.img = document.getElementById("videoImage").src;
+            app.addPhoto(datatosend);
+            app.addToStorage(datatosend);
+            app.changeView('gallery');
+        }
     }
 }
-
-
 
 function createImg(datatosend, callback, callback2) { // using fileAPI
     var input, file, fr, img;
@@ -133,7 +169,7 @@ function createImg(datatosend, callback, callback2) { // using fileAPI
         fr.onload = function () {
             img = new Image();
             img.onload = function () {
-                var canvas = document.getElementById("canvas")
+                var canvas = document.getElementById("canvas");
                 canvas.width = img.width;
                 canvas.height = img.height;
                 var ctx = canvas.getContext("2d");
@@ -170,9 +206,23 @@ function cleardiv(div) {
 
 var mediaStream = null;
 
-function videoStart() {
+function videoStart(event) {
+    event.preventDefault();
     var div = document.getElementById('fader');
     addRemoveClass(div, 'active');
+    var btn = document.getElementById('addToForm');
+    btn.style.display = 'none';
+    var takephoto = document.getElementById('takephoto');
+    takephoto.setAttribute('onclick','takePhoto(this, event)');
+    takephoto.innerHTML = 'take a photo <i class="material-icons">photo_camera</i>';
+    videoRun(event);
+    if (document.getElementById('camera').children.length > 1) {
+        var ch = document.getElementById('camera').children[1];
+        ch.parentNode.removeChild(ch);
+    }
+}
+function videoRun(event, elem) {
+    event.preventDefault();
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
     if (navigator.getUserMedia) {
         navigator.getUserMedia({
@@ -200,25 +250,59 @@ function videoStart() {
     } else {
         alert("getUserMedia not supported");
     }
+    if (elem) {
+        elem.innerHTML = 'take a photo <i class="material-icons">photo_camera</i>';
+        elem.setAttribute('onclick','takePhoto(this, event)');
+        var btn = document.getElementById('addToForm');
+        btn.style.display = 'none';
+    }
 }
 
-function videoStop() {
-    var div = document.getElementById('fader');
+function videoStop(event) {
+    event.preventDefault();
+    var video = document.querySelector('video'),
+        div = document.getElementById('fader'),
+        btn = document.getElementById('addToForm');
     addRemoveClass(div, 'active');
     mediaStream.getVideoTracks()[0].stop();
     video.src="";
     video.style.display = 'none';
+    btn.style.display = 'none';
 }
 
-function takePhoto() {
-    var video = document.querySelector('video');
-    var canvas = document.getElementById('canvas2');
-    var img = document.getElementById('videoImage');
+function takePhoto(elem, event) {
+    event.preventDefault();
+    var video = document.querySelector('video'),
+        canvas = document.getElementById('canvas2'),
+        img = document.getElementById('videoImage'),
+        btn = document.getElementById('addToForm');
     canvas.getContext('2d').drawImage(video, 0, 0, 640, 480);
     // "image/webp" works in Chrome 18. In other browsers, this will fall back to image/png.
-    img.src = canvas.toDataURL('image/webp');
+    img.src = canvas.toDataURL('image/png');
     img.style.display = 'block';
     mediaStream.getVideoTracks()[0].stop();
     video.src="";
     video.style.display = 'none';
+    btn.style.display = 'inline-block';
+    elem.innerHTML = 'take another<i class="material-icons">videocam</i>';
+    elem.setAttribute('onclick','videoRun(event, this)');
 }
+
+function addToForm(event){
+    event.preventDefault();
+    var fader = document.getElementById('fader');
+    addRemoveClass(fader, 'active');
+
+    document.getElementById("file").value = ""; // remove value from file
+    var checked = document.getElementById('checked');
+    if (checked) {
+        checked.parentNode.removeChild(checked);
+    } // end remove value from file
+
+    var div = document.createElement('div');
+    div.id = 'checked';
+    div.className = "inline-block green";
+    div.innerHTML = '<i class="material-icons">check</i>';
+    document.getElementById('camera').appendChild(div);
+}
+

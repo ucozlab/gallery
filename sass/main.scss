@@ -68,7 +68,9 @@ body {
 .padding20 {
     padding: 0 $forty/2;
 }
-
+.green {
+    color: $green;
+}
 #logo {
     border-bottom: 1px solid $gray;
     padding: 15px 0;
@@ -247,8 +249,9 @@ fieldset {
         margin: 0 0 $forty/4 0;
         width: 100%;
     }
-    input[type="submit"] {
+    input[type="submit"], input[type="file"] {
         display: inline-block;
+        vertical-align: middle;
         width: auto;
     }
 }
@@ -421,7 +424,9 @@ video {
         @include border-radius(2px);
     }
     .popup-content {
-
+        #videoImage {
+            display: none;
+        }
     }
     .popup-close {
         position: absolute;

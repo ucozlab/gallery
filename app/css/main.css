@@ -11,6 +11,9 @@ body {
 .padding20 {
   padding: 0 20px; }
 
+.green {
+  color: #689f38; }
+
 #logo {
   border-bottom: 1px solid #a1a1a1;
   padding: 15px 0;
@@ -205,8 +208,9 @@ fieldset {
   margin: 0 0 10px 0;
   width: 100%; }
 
-#addform input[type="submit"] {
+#addform input[type="submit"], #addform input[type="file"] {
   display: inline-block;
+  vertical-align: middle;
   width: auto; }
 
 .block {
@@ -402,6 +406,8 @@ video {
     -moz-border-radius: 2px;
     -ms-border-radius: 2px;
     border-radius: 2px; }
+  #fader .popup-content #videoImage {
+    display: none; }
   #fader .popup-close {
     position: absolute;
     right: 15px;

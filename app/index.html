@@ -83,26 +83,26 @@
                                                     <input type="text" name="photoname" required placeholder="Name">
                                                 </div>
                                                 <textarea name="description" placeholder="Description"></textarea>
-                                                <div class="file">
+                                                <div class="file" id="filediv">
                                                     <input type="file" name="file" id="file">
-                                                    <div class="margin10">OR</div>
-                                                    <a href="javascript:void(0)" class="button button2 padding20 margin10" onclick="videoStart()">take a photo from webcam</a>
-                                                    <input type="file" name="file2" id="file2" accept="image/*;capture=camera">
+                                                </div>
+                                                <div class="margin10">OR</div>
+                                                <div id="camera">
+                                                    <a href="javascript:void(0)" class="button button2 padding20 margin10" onclick="videoStart(event)">take a photo from webcam</a>
                                                 </div>
                                                 <input type="submit" value="Submit">
                                             </form>
                                         </fieldset>
-
                                     </div>
                                 </div>
                             </div>
                             <div id="fader">
                                 <div class="popup">
-                                    <a href="javascript:void(0)" class="popup-close" onclick="videoStop()"><i class="material-icons">clear</i></a>
+                                    <a href="javascript:void(0)" class="popup-close" onclick="videoStop(event)"><i class="material-icons">clear</i></a>
                                     <div class="popup-content">
                                         <div class="row">
-                                            <div class="col-md-3 col-xs-12">
-                                                <a href="javascript:void(0)" onclick="takePhoto()" class="button padding20 button2" id="takephoto">take a photo <i class="material-icons">photo_camera</i></a>
+                                            <div class="col-md-3 col-xs-12" id="popup_aside">
+                                                <a href="javascript:void(0)" onclick="takePhoto(this,event)" class="button margin10 padding20 button2" id="takephoto">take a photo <i class="material-icons">photo_camera</i></a><button class="button padding20" id="addToForm" onclick="addToForm(event)"><span class="inline-block">Add to form</span> <i class="material-icons inline-block">add_circle</i></button>
                                             </div>
                                             <div class="col-md-9 col-xs-12">
                                                 <div class="block">
