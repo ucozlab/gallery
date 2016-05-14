@@ -85,12 +85,32 @@
                                                 <textarea name="description" placeholder="Description"></textarea>
                                                 <div class="file">
                                                     <input type="file" name="file" id="file">
-                                                    <!--<input type="file" accept="image/*;capture=camera">-->
+                                                    <div class="margin10">OR</div>
+                                                    <a href="javascript:void(0)" class="button button2 padding20 margin10" onclick="videoStart()">take a photo from webcam</a>
+                                                    <input type="file" name="file2" id="file2" accept="image/*;capture=camera">
                                                 </div>
                                                 <input type="submit" value="Submit">
                                             </form>
                                         </fieldset>
-                                        <video autoplay class="inline"></video>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="fader">
+                                <div class="popup">
+                                    <a href="javascript:void(0)" class="popup-close" onclick="videoStop()"><i class="material-icons">clear</i></a>
+                                    <div class="popup-content">
+                                        <div class="row">
+                                            <div class="col-md-3 col-xs-12">
+                                                <a href="javascript:void(0)" onclick="takePhoto()" class="button padding20 button2" id="takephoto">take a photo <i class="material-icons">photo_camera</i></a>
+                                            </div>
+                                            <div class="col-md-9 col-xs-12">
+                                                <div class="block">
+                                                    <video width="640" height="480" class="inline"></video>
+                                                    <img src="" id="videoImage" width="640" height="480" alt="" />
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -101,7 +121,7 @@
                                     <h3>Albums list:</h3>
                                     <div id="catlist2">
                                         <ul class="catlist">
-                                            <li>you don't have any photos yet</li>
+                                            <li>you don't have any albums yet</li>
                                         </ul>
                                     </div>
                                     <div class="margin30"><a class="button button2 padding20" href="javascript:void(0)" onclick="app.changeView('new');">Add new photo <i class="inline-block material-icons">navigate_next</i></a>
@@ -124,6 +144,7 @@
                             <div class="row">
                                 <div class="col-md-3 col-xs-12">
                                     <div id="maindesc" class="text-right"></div>
+                                    <div class="margin30 text-right paddingright30"><a class="button button2 padding20" href="javascript:void(0)" onclick="history.go(-1);">Back <i class="inline-block material-icons">navigate_before</i></a></div>
                                 </div>
                                 <div class="col-md-9 col-xs-12 innerpage">
                                     <div id="mainphoto"></div>
@@ -136,6 +157,7 @@
         </div>
     </div>
     <canvas id="canvas"></canvas>
+    <canvas id="canvas2" width="640" height="480"></canvas>
     <footer>
         <div id="footer">
             <div class="copyright centertext">

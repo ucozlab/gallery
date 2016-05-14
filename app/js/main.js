@@ -10,6 +10,11 @@ function addRemoveClass(who, andclass) { // add or remove Class
     }
 }
 
+function loader(div) {
+    var loaderdiv = document.getElementById(div);
+    addRemoveClass(loaderdiv, 'loader');
+}
+
 function siblingsAddRemoveClass(who, andclass) { // remove siblings class and add it to this
     var siblings = who.parentNode.childNodes;
     for (var i = 0; i < siblings.length; i++) {
@@ -59,33 +64,6 @@ if (!supports_html5_storage()) {
     alert('You can\'t use localstorage, please allow it or use another browser!');
 }
 
-/*indexedDB*/
-var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
-var IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
-if (!indexedDB) {
-    alert("Your browser doesn't support a stable version of IndexedDB");
-}
-
-function connectDB(f) {
-    var request = indexedDB.open("myBase", 1);
-    request.onerror = function (err) {
-        console.log(err);
-    };
-    request.onsuccess = function () {
-        // При успешном открытии вызвали коллбэк передав ему объект БД
-        f(request.result);
-    }
-    request.onupgradeneeded = function (e) {
-        // Если БД еще не существует, то создаем хранилище объектов.
-        e.currentTarget.result.createObjectStore("myObjectStore", {
-            keyPath: "key"
-        });
-        connectDB(f);
-    }
-}
-/*IndexedDBend*/
-
-
 /*click functions*/
 var viewlinks = document.querySelectorAll('#nav ul li a');
 var viewlinksItems = [].slice.call(viewlinks);
@@ -108,21 +86,18 @@ function formValidate(event) { //create img and callback add.photo
     if ((photocat == '') || (photoname == '')) { // test on html5 attr required
         alert('Fill in required fields');
     } else {
-        var loaderdiv = document.getElementById('addform');
-        addRemoveClass(loaderdiv, 'loader');
-
+        loader('addform');
         if (localStorage.length) { // check if localstorage allready have item with "trying to added" name
             for (var i = 0; i < localStorage.length; i++) {
                 var thiskey = localStorage.key(i);
                 var parsed = JSON.parse(localStorage.getItem(thiskey));
                 if (parsed.name === photoname) { //check if localStorage has items
                     alert('this photo allready exists!');
-                    addRemoveClass(loaderdiv, 'loader');
+                    loader('addform');
                     return false;
                 }
             }
         }
-
         datatosend = {
             cat: photocat,
             name: photoname,
@@ -132,8 +107,10 @@ function formValidate(event) { //create img and callback add.photo
     }
 }
 
+
+
 function createImg(datatosend, callback, callback2) { // using fileAPI
-    var input, file, fr, img, loaderdiv = document.getElementById('addform');
+    var input, file, fr, img;
 
     if (typeof window.FileReader !== 'function') {
         write("The file API isn't supported on this browser yet.");
@@ -143,13 +120,13 @@ function createImg(datatosend, callback, callback2) { // using fileAPI
     input = document.getElementById('file');
     if (!input) {
         alert("Um, couldn't find the imgfile element.");
-        addRemoveClass(loaderdiv, 'loader');
+        loader('addform');
     } else if (!input.files) {
         alert("This browser doesn't seem to support the `files` property of file inputs.");
-        addRemoveClass(loaderdiv, 'loader');
+        loader('addform');
     } else if (!input.files[0]) {
         alert("Please select a file before clicking 'Submit'");
-        addRemoveClass(loaderdiv, 'loader');
+        loader('addform');
     } else {
         file = input.files[0];
         fr = new FileReader();
@@ -171,6 +148,7 @@ function createImg(datatosend, callback, callback2) { // using fileAPI
         fr.readAsDataURL(file);
     }
 }
+
 function checkIfEmpty(div, callback) {
     var link = document.querySelector(div);
     if (link.children.length < 1) {
@@ -184,7 +162,63 @@ function checkIfEmpty(div, callback) {
         return false;
     }
 }
-function cleardiv(div){
+
+function cleardiv(div) {
     var itemsrow = document.querySelector(div);
     itemsrow.innerHTML = "";
+}
+
+var mediaStream = null;
+
+function videoStart() {
+    var div = document.getElementById('fader');
+    addRemoveClass(div, 'active');
+    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+    if (navigator.getUserMedia) {
+        navigator.getUserMedia({
+                audio: false,
+                video: {
+                    width: 640,
+                    height: 480
+                }
+            },
+            function (stream) {
+                var video = document.querySelector('video');
+                var img = document.getElementById('videoImage');
+                img.style.display = 'none';
+                video.src = window.URL.createObjectURL(stream);
+                video.style.display = 'block';
+                video.onloadedmetadata = function (e) {
+                    video.play();
+                };
+                mediaStream = stream;
+            },
+            function (err) {
+                alert("The following error occurred: " + err.name);
+            }
+        );
+    } else {
+        alert("getUserMedia not supported");
+    }
+}
+
+function videoStop() {
+    var div = document.getElementById('fader');
+    addRemoveClass(div, 'active');
+    mediaStream.getVideoTracks()[0].stop();
+    video.src="";
+    video.style.display = 'none';
+}
+
+function takePhoto() {
+    var video = document.querySelector('video');
+    var canvas = document.getElementById('canvas2');
+    var img = document.getElementById('videoImage');
+    canvas.getContext('2d').drawImage(video, 0, 0, 640, 480);
+    // "image/webp" works in Chrome 18. In other browsers, this will fall back to image/png.
+    img.src = canvas.toDataURL('image/webp');
+    img.style.display = 'block';
+    mediaStream.getVideoTracks()[0].stop();
+    video.src="";
+    video.style.display = 'none';
 }

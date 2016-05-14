@@ -1,11 +1,113 @@
-<li id="cid-1"><a id="lid-1" class="catref" href="/shop/for_passenger_vehicles">Для легковых автомобилей</a></li>
-<li id="cid-7"><a id="lid-7" class="catref" href="/shop/for-trucks">Для грузовых автомобилей</a></li>
-<li id="cid-11"><a id="lid-11" class="catref" href="/shop/immobilizer-programming">Программирование имобилайзеров</a></li>
-<li id="cid-2"><a id="lid-2" class="catref" href="/shop/multibrand">Мультимарочные</a></li>
-<li id="cid-8"><a id="lid-8" class="catref" href="/shop/odometer-programming">Корректировка одометров</a></li>
-<li id="cid-12"><a id="lid-12" class="catref" href="/shop/other-tools">Другое оборудование</a></li>
-<li id="cid-3"><a id="lid-3" class="catref" href="/shop/cables-for-scan-tools">Кабели для диагностического оборудования</a></li>
-<li id="cid-9"><a id="lid-9" class="catref" href="/shop/equipment-for-lea">Системы доступа для правоохранительных органов</a></li>
-<li id="cid-4"><a id="lid-4" class="catref" href="/shop/key-blanks">Смарт ключи</a></li>
-<li id="cid-10"><a id="lid-10" class="catref" href="/shop/chip-tuning">Чип тюнинг</a></li>
-<li id="cid-17"><a id="lid-17" class="catref" href="/shop/software">Программное обеспечение</a></li>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>getUserMedia Demo</title>
+    <style>
+      body
+      {
+        max-width: 500px;
+        margin: 2em auto;
+        font-size: 20px;
+      }
+
+      h1
+      {
+        text-align: center;
+      }
+
+      .buttons-wrapper
+      {
+        text-align: center;
+      }
+
+      .hidden
+      {
+        display: none;
+      }
+
+      #video
+      {
+        display: block;
+        width: 100%;
+      }
+
+      .button-demo
+      {
+        padding: 0.5em;
+        display: inline-block;
+        margin: 1em auto;
+      }
+
+      .author
+      {
+        display: block;
+        margin-top: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>getUserMedia API</h1>
+    <video id="video" autoplay="autoplay" controls="true"></video>
+    <div class="buttons-wrapper">
+      <button id="button-play-gum" class="button-demo" href="#">Play demo</button>
+      <button id="button-stop-gum" class="button-demo" href="#">Stop demo</button>
+    </div>
+    <span id="gum-unsupported" class="hidden">API not supported</span>
+    <span id="gum-partially-supported" class="hidden">API partially supported (video only)</span>
+    <script>
+      var videoStream = null;
+      var video = document.getElementById("video");
+
+      // Test browser support
+      window.navigator = window.navigator || {};
+      navigator.getUserMedia = navigator.getUserMedia       ||
+                               navigator.webkitGetUserMedia ||
+                               navigator.mozGetUserMedia    ||
+                               null;
+
+      if (navigator.getUserMedia === null) {
+        document.getElementById('gum-unsupported').classList.remove('hidden');
+        document.getElementById('button-play-gum').setAttribute('disabled', 'disabled');
+        document.getElementById('button-stop-gum').setAttribute('disabled', 'disabled');
+      } else {
+        // Opera <= 12.16 accepts the direct stream.
+        // More on this here: http://dev.opera.com/articles/view/playing-with-html5-video-and-getusermedia-support/
+        var createSrc = window.URL ? window.URL.createObjectURL : function(stream) {return stream;};
+
+        // Opera <= 12.16 support video only.
+        var audioContext = window.AudioContext       ||
+                           window.webkitAudioContext ||
+                           null;
+        if (audioContext === null) {
+          document.getElementById('gum-partially-supported').classList.remove('hidden');
+        }
+
+        document.getElementById('button-play-gum').addEventListener('click', function() {
+          // Capture user's audio and video source
+          navigator.getUserMedia({
+            video: true,
+            audio: false
+          },
+          function(stream) {
+            videoStream = stream;
+            // Stream the data
+            video.src = createSrc(stream);
+            video.play();
+          },
+          function(error) {
+            console.log("Video capture error: ", error.code);
+          });
+        });
+        document.getElementById('button-stop-gum').addEventListener('click', function() {
+          // Pause the video
+          video.pause();
+          video.src="";
+          // Stop the stream
+          //videoStream.stop();
+        });
+      }
+    </script>
+  </body>
+</html>
