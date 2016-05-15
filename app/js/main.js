@@ -134,6 +134,7 @@ function formValidate(event) { //create img and callback add.photo
                 return false;
             } else {
                 createImg(datatosend, app.addPhoto, app.addToStorage); //get data from fields and send to createImg function
+                clearForm();
             }
         } else {
             //var videoImage = document.getElementById("videoImage");
@@ -141,8 +142,18 @@ function formValidate(event) { //create img and callback add.photo
             app.addPhoto(datatosend);
             app.addToStorage(datatosend);
             app.changeView('gallery');
+            clearForm();
         }
     }
+}
+
+function clearForm() {
+    addform.elements["category"].value = "";
+    addform.elements["photoname"].value = "";
+    addform.elements["description"].value = "";
+    addform.elements["file"].value = "";
+    var checked = document.getElementById('checked');
+    checked.parentNode.removeChild(checked);
 }
 
 function createImg(datatosend, callback, callback2) { // using fileAPI

@@ -146,7 +146,8 @@ app.addCat = function (event) {
         }
     }
 
-    app.addFrontendCat(newcat); //frontend end
+    app.addFrontendCat(newcat);
+    addform2.elements["inputcat"].value = ""; //frontend end
 
     arr.push(newcat);
     try { // try is needed to see if the image is too big
