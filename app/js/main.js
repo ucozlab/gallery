@@ -1,8 +1,15 @@
+
+/*** check if hasClass ***/
+
 function hasClass(elem, klass) {
-    return (" " + elem.className + " ").indexOf(" " + klass + " ") > -1; //check if hasClass
+    return (" " + elem.className + " ").indexOf(" " + klass + " ") > -1;
 }
 
-function addRemoveClass(who, andclass) { // add or remove Class
+
+
+/*** add or remove Class ***/
+
+function addRemoveClass(who, andclass) {
     if (hasClass(who, andclass)) {
         who.classList.remove(andclass);
     } else {
@@ -10,12 +17,19 @@ function addRemoveClass(who, andclass) { // add or remove Class
     }
 }
 
+
+/*** adds or removes loader Class ***/
+
 function loader(div) {
     var loaderdiv = document.getElementById(div);
     addRemoveClass(loaderdiv, 'loader');
 }
 
-function siblingsAddRemoveClass(who, andclass) { // remove siblings class and add it to this
+
+
+/*** remove siblings class and add it to this ***/
+
+function siblingsAddRemoveClass(who, andclass) {
     var siblings = who.parentNode.childNodes;
     for (var i = 0; i < siblings.length; i++) {
         if (siblings[i].nodeType != 1) {
@@ -27,16 +41,27 @@ function siblingsAddRemoveClass(who, andclass) { // remove siblings class and ad
     who.classList.add(andclass);
 }
 
-function mainMenu(elem) { // menubutton click
+
+
+/*** menubutton click ***/
+
+function mainMenu(elem) {
     addRemoveClass(elem, 'opened');
     return false;
 }
 
-function capitalizeFirstLetter(string) { // Uppercase first letter
+
+/*** Uppercase first letter ***/
+
+function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-function append(what, to) { //simple append
+
+
+/*** simple append ***/
+
+function append(what, to) {
     var appenddiv = document.getElementById(to);
     if (appenddiv.childNodes.length > 0) {
         var arr = [];
@@ -51,7 +76,10 @@ function append(what, to) { //simple append
     }
 }
 
-//check if localstorage
+
+
+/*** check if browser has localstorage ***/
+
 function supports_html5_storage() {
     try {
         return 'localStorage' in window && window['localStorage'] !== null;
@@ -59,12 +87,14 @@ function supports_html5_storage() {
         return false;
     }
 }
-//run
 if (!supports_html5_storage()) {
     alert('You can\'t use localstorage, please allow it or use another browser!');
 }
 
-/*click functions*/
+
+
+/*** mainmenu click functions ***/
+
 var viewlinks = document.querySelectorAll('#nav ul li a');
 var viewlinksItems = [].slice.call(viewlinks);
 viewlinksItems.forEach(function (item, i) {
@@ -74,12 +104,13 @@ viewlinksItems.forEach(function (item, i) {
         app.changeView(linktext);
     });
 });
-/*click functions end*/
 
-//validate input type file
-var fileToRead = document.getElementById("file");
-fileToRead.addEventListener("change", function(event) {
-    var files = fileToRead.files;
+
+
+/*** input type file change ***/
+
+function changeFile(elem) {
+    var files = elem.files;
     var len = files.length;
     // we should read just one file
     if (len) {
@@ -96,11 +127,17 @@ fileToRead.addEventListener("change", function(event) {
         var divtoremove = document.getElementById('checked');
         divtoremove.parentElement.removeChild(divtoremove);
     }
+}
 
-}, false);
 
 
-function formValidate(event) { //create img and callback add.photo
+/***
+    1) validate addForm
+    2) create img or take it from webcam
+    3) add photo to gallery & add photo to storage
+***/
+
+function formValidate(event) {
     event.preventDefault();
     var datatosend,
         photocat = addform.elements["category"].value,
@@ -134,18 +171,23 @@ function formValidate(event) { //create img and callback add.photo
                 return false;
             } else {
                 createImg(datatosend, app.addPhoto, app.addToStorage); //get data from fields and send to createImg function
-                clearForm();
+                //clearForm();
             }
         } else {
             //var videoImage = document.getElementById("videoImage");
+            //clearForm();
             datatosend.img = document.getElementById("videoImage").src;
-            app.addPhoto(datatosend);
-            app.addToStorage(datatosend);
-            app.changeView('gallery');
-            clearForm();
+            app.changeView('gallery',null,function(){
+                app.addPhoto(datatosend);
+                app.addToStorage(datatosend);
+            });
         }
     }
 }
+
+
+
+/*** clear add Form (after submit) ***/
 
 function clearForm() {
     addform.elements["category"].value = "";
@@ -155,6 +197,10 @@ function clearForm() {
     var checked = document.getElementById('checked');
     checked.parentNode.removeChild(checked);
 }
+
+
+
+/*** create Img and callback addPhoto & add to storage ***/
 
 function createImg(datatosend, callback, callback2) { // using fileAPI
     var input, file, fr, img;
@@ -186,15 +232,20 @@ function createImg(datatosend, callback, callback2) { // using fileAPI
                 var ctx = canvas.getContext("2d");
                 ctx.drawImage(img, 0, 0);
                 datatosend.img = canvas.toDataURL("image/png");
-                app.changeView('gallery');
-                callback(datatosend); //app.addPhoto(created_image, data_from_fields)
-                callback2(datatosend);
+                app.changeView('gallery',null,function(){
+                    callback(datatosend); //app.addPhoto(created_image, data_from_fields)
+                    callback2(datatosend);
+                });
             };
             img.src = fr.result;
         };
         fr.readAsDataURL(file);
     }
 }
+
+
+
+/*** check if empty div (needed for #items .row) ***/
 
 function checkIfEmpty(div, callback) {
     var link = document.querySelector(div);
@@ -210,12 +261,24 @@ function checkIfEmpty(div, callback) {
     }
 }
 
+
+
+/*** clear everything that get ***/
+
 function cleardiv(div) {
     var itemsrow = document.querySelector(div);
     itemsrow.innerHTML = "";
 }
 
+
+
+/*** variable for overwriting it in future (needed for video) ***/
+
 var mediaStream = null;
+
+
+
+/*** start video (after clicking on popup button) ***/
 
 function videoStart(event) {
     event.preventDefault();
@@ -232,6 +295,11 @@ function videoStart(event) {
         ch.parentNode.removeChild(ch);
     }
 }
+
+
+
+/*** run video and if not from popup - change button ***/
+
 function videoRun(event, elem) {
     event.preventDefault();
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
@@ -252,7 +320,7 @@ function videoRun(event, elem) {
                 video.onloadedmetadata = function (e) {
                     video.play();
                 };
-                mediaStream = stream;
+                mediaStream = stream;  // overwrite initialized variable to work with it in future
             },
             function (err) {
                 alert("The following error occurred: " + err.name);
@@ -269,6 +337,10 @@ function videoRun(event, elem) {
     }
 }
 
+
+
+/*** stop video ***/
+
 function videoStop(event) {
     event.preventDefault();
     var video = document.querySelector('video'),
@@ -280,6 +352,10 @@ function videoStop(event) {
     video.style.display = 'none';
     btn.style.display = 'none';
 }
+
+
+
+/*** make photo and change button to start video ***/
 
 function takePhoto(elem, event) {
     event.preventDefault();
@@ -298,6 +374,10 @@ function takePhoto(elem, event) {
     elem.innerHTML = 'take another<i class="material-icons">videocam</i>';
     elem.setAttribute('onclick','videoRun(event, this)');
 }
+
+
+
+/*** add photo from camera to form and add check ***/
 
 function addToForm(event){
     event.preventDefault();

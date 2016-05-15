@@ -215,12 +215,12 @@ h3 {
     }
 }
 
-section {
+/*section {
     display: none;
     &.active {
         display: block;
     }
-}
+}*/
 
 fieldset {
     display: inline-block;
@@ -399,6 +399,7 @@ canvas {
 video {
     width: 640px;
     height: 480px;
+    background: url(../img/loader.gif) center center no-repeat;
 }
 #fader {
     display: none;

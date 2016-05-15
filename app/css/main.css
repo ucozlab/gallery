@@ -180,11 +180,12 @@ h3 {
     color: #ffffff;
     background-color: #212121; }
 
-section {
-  display: none; }
-  section.active {
-    display: block; }
-
+/*section {
+    display: none;
+    &.active {
+        display: block;
+    }
+}*/
 fieldset {
   display: inline-block;
   width: 100%; }
@@ -380,7 +381,8 @@ canvas {
 /*popup*/
 video {
   width: 640px;
-  height: 480px; }
+  height: 480px;
+  background: url(../img/loader.gif) center center no-repeat; }
 
 #fader {
   display: none;
